@@ -1,0 +1,83 @@
+
+.genres-list-container {
+    padding: 20px;
+    
+    .title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+
+        .add-genre-btn {
+            align-self: flex-start; /* Align button to the left */
+            background-color: #0d6efd;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #0071ba;
+            }
+        }
+
+        h2 {
+            margin: 0;
+            text-align: center;
+            flex: 1;
+        }
+    }
+
+    .table-genres {
+        width: 100%;
+        border-collapse: collapse;
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .btn-edit, .btn-delete {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 5px;
+            margin: 0 5px;
+            transition: background-color 0.3s, color 0.3s;
+            background: transparent;
+            &:hover {
+                transform: scale(1.2);
+            }
+        }
+
+      .btn-edit {
+  color: #ffa500; // Màu cam cho nút chỉnh sửa
+
+  &:hover {
+    background-color: #ffebcc; // Nền sáng hơn khi hover
+    color: #ff6600; // Màu cam đậm khi hover
+  }
+}
+
+.btn-delete {
+  color: #ff0000; // Màu đỏ cho nút xóa
+
+  &:hover {
+    background-color: #ffcccc; // Nền sáng hơn khi hover
+    color: #cc0000; // Màu đỏ đậm khi hover
+  }
+}
+    }
+}

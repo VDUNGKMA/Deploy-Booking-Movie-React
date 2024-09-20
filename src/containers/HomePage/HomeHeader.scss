@@ -1,0 +1,203 @@
+.home-header-container {
+    width: 100%;
+    height: 70px;
+    padding: 0 40px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: white;
+
+    .home-header-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+
+        .left-content {
+            width: 20%;
+            display: flex;
+            align-items: center;
+
+            .header-logo {
+              
+                height: 130%;
+                width: 130%;
+                cursor: pointer;
+                transform: scale(0.5,0.5);
+                margin-left: -50px;
+            }
+
+            i {
+                font-size: 25px;
+                color: grey;
+                cursor: pointer;
+            }
+
+        }
+
+        .center-content {
+            width: 60%;
+            justify-content: space-between;
+            display: flex;
+            align-items: center;
+
+            .child-content {
+                font-size: 14px;
+                font-weight: 400;
+
+            }
+        }
+
+        .right-content {
+            width: 20%;
+            justify-content: center;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            .support{
+                padding: 50px;
+                display: flex;
+                align-items: center;
+                cursor: pointer
+            }
+            .language-vn{
+                cursor: pointer;
+                opacity: 0.2;
+                &.active{
+                    opacity: 1;
+                    span{
+                      
+                        color:red;
+                    }        
+                }
+                &:hover{
+                    opacity: 0.8;
+                }
+            }
+            .language-en{
+                margin:0 10px;
+                cursor: pointer;
+                opacity: 0.2;
+                &.active{
+                    opacity: 1;
+                    span{
+                       
+                        color:blue
+                    }
+                    
+                }
+                &:hover{
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+}
+
+.home-header-banner {
+    display: flex;
+    flex-direction: column;
+    background: url(../../assets/bookingcare-cover-4.1.jpg);
+    height: 440px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+    .content-up {
+
+        height: 65%;
+        padding-top: 15px;
+        background-image: linear-gradient(rgba(126,126,126,0.25),rgba(255,255,255,0.1));
+
+        .title1 {
+            text-align: center;
+            font-size: 30px;
+            text-shadow: 1px 1px 1px #333;
+            margin-bottom: 5px;
+            color: white;
+            margin-top: 30px;
+
+        }
+
+        .titel2 {
+            text-align: center;
+            font-size: 30px;
+            color: white;
+            text-shadow: 1px 1px 1px black;
+            margin-bottom: 15px;
+        }
+
+        .search {
+
+            width: fit-content;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            background: yellow;
+            border-radius: 23px;
+
+            i {
+                margin: 0 8px;
+                padding: 4px
+            }
+
+            input {
+                width: 326px;
+                height: 48px;
+                border: none;
+                background-color: transparent;
+                outline: none;
+            }
+        }
+    }
+
+    .content-down {
+        height: 35%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        padding-bottom: 10px;
+        background-image: linear-gradient(rgba(255,255,255,0.1),rgba(255,255,255,0.9),rgba(255,255,255,1));
+
+        .option {
+            display: flex;
+            text-align: center;
+            grid-gap: 50px;
+            justify-content: center;
+
+            .option-child {
+                width: 100px;
+                text-align: center;
+               
+
+                .icon-child {
+                    margin: 0 auto;
+                    background: white;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    text-align: center;
+                    padding: 10px;
+
+                    i {
+                        font-size: 21px;
+                        color: #49bce2;
+                    }
+
+                    cursor: pointer;
+                }
+
+                .text-child {
+                    font-size: 16px;
+                    font-weight: 540;
+                    cursor: pointer;
+
+                    &:hover {
+                        color: #49bce2;
+                    }
+                }
+            }
+
+        }
+    }
+}

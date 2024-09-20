@@ -1,0 +1,152 @@
+/* src/containers/System/Admin/ManageSchedule.scss */
+
+.manage-cinema-container {
+  padding: 20px;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+  }
+
+  .add-cinema-button {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+
+    button {
+      background-color: #28a745;
+      border-color: #28a745;
+      color: #fff;
+      &:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+      }
+    }
+  }
+
+  .cinema-table {
+    width: 100%;
+    overflow-x: auto;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      th,
+      td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #dee2e6;
+        vertical-align: middle;
+      }
+
+      th {
+        background-color: #f8f9fa;
+      }
+
+      tbody tr:hover {
+        background-color: #f1f1f1;
+      }
+
+      img.cinema-image {
+        width: 100px;
+        height: auto;
+        object-fit: cover;
+        border-radius: 5px;
+      }
+
+      .action-buttons {
+        button {
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+
+  /* Style cho Modal thêm mới/chỉnh sửa rạp chiếu phim */
+  .modal-header {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  .modal-footer {
+    button {
+      min-width: 100px;
+    }
+  }
+
+  /* Style cho Form */
+  .form-group {
+    margin-bottom: 20px;
+
+    label {
+      font-weight: bold;
+    }
+
+    input[type='file'] {
+      padding: 5px;
+    }
+  }
+
+  /* Style cho Preview Image */
+  .preview-image {
+    margin-top: 10px;
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+  }
+
+  /* Style cho Modal quản lý phòng chiếu */
+  .theater-modal .modal-header {
+    background-color: #17a2b8;
+    color: #fff;
+  }
+
+  .theater-modal .action-buttons {
+    button {
+      margin-right: 5px;
+    }
+  }
+
+  .theater-modal .add-theater-button {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+
+    button {
+      background-color: #17a2b8;
+      border-color: #17a2b8;
+      color: #fff;
+      &:hover {
+        background-color: #138496;
+        border-color: #117a8b;
+      }
+    }
+  }
+
+  /* Style cho Modal thêm mới/chỉnh sửa phòng chiếu */
+  .modal-header {
+    background-color: #28a745;
+    color: #fff;
+  }
+
+  .manage-cinema-container .theater-modal {
+    /* Đảm bảo z-index phù hợp nếu cần thiết */
+    z-index: 1050; // Modal mặc định của Bootstrap là 1050
+  }
+
+  .manage-cinema-container .modal {
+    /* Các modal khác */
+    z-index: 1050;
+  }
+
+  /* Đảm bảo rằng Add/Edit Theater Modal có z-index cao hơn Manage Theaters Modal */
+  .manage-cinema-container .modal-md {
+    z-index: 1060;
+  }
+}

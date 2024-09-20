@@ -1,0 +1,97 @@
+.btn {
+    margin: 5px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #0056b3;
+    }
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #c82333;
+    }
+}
+.manage-movie-container {
+  margin-left: 20px; // Dịch toàn bộ container sang phải
+  padding-left: 20px; // Dịch nội dung bên trong container sang phải
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    th {
+      background-color: #0071BA;
+      color: white;
+      font-weight: bold;
+    }
+  }
+
+  .btn {
+    margin-right: 10px;
+  }
+
+  .modal-user-container {
+    .modal-content {
+      border-radius: 8px;
+
+      .modal-header {
+        border-bottom: 1px solid #ddd;
+
+        button {
+          background-color: transparent;
+          color: #0071BA;
+          border: none;
+          font-size: 24px;
+        }
+      }
+
+      .modal-user-body {
+        padding: 20px;
+
+        .input-container {
+          margin-bottom: 15px;
+          width: 100%;
+
+          input, textarea {
+            width: 100%;
+            border-radius: 5px;
+            height: 35px;
+            padding: 0 12px;
+            border: 1px solid #ccc;
+            outline: none;
+          }
+        }
+      }
+    }
+  }
+}

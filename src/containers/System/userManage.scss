@@ -1,0 +1,120 @@
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+
+  td, th {
+    border: 1px solid #ddd;
+    padding: 12px; // Tăng padding để bảng trông rõ ràng hơn
+  }
+
+  tr:nth-child(even) {
+    background-color: #f9f9f9; // Sử dụng màu sáng hơn cho các hàng chẵn
+  }
+
+  tr:hover {
+    background-color: #f1f1f1; // Màu nền khi di chuột qua hàng
+  }
+
+  th {
+    padding: 15px; // Tăng padding cho header
+    text-align: left;
+    background-color: #0071BA; // Màu nền của header
+    color: white;
+    font-weight: bold; // Tăng cường độ đậm chữ trong header
+  }
+}
+
+.btn-edit, .btn-delete {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; // Tạo nút tròn
+  border: 2px solid transparent; // Thêm viền cho nút
+  background: transparent;
+  font-size: 18px;
+  text-align: center;
+  line-height: 40px; // Căn giữa icon trong nút
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-edit {
+  color: #ffa500; // Màu cam cho nút chỉnh sửa
+
+  &:hover {
+    background-color: #ffebcc; // Nền sáng hơn khi hover
+    color: #ff6600; // Màu cam đậm khi hover
+  }
+}
+
+.btn-delete {
+  color: #ff0000; // Màu đỏ cho nút xóa
+
+  &:hover {
+    background-color: #ffcccc; // Nền sáng hơn khi hover
+    color: #cc0000; // Màu đỏ đậm khi hover
+  }
+}
+
+.modal-user-container {
+  .modal-content {
+    border-radius: 8px; // Thêm bo góc cho modal
+    overflow: hidden; // Ẩn các phần ra ngoài modal
+
+    .modal-header {
+      border-bottom: 1px solid #ddd; // Thêm viền dưới cho header modal
+
+      button {
+        background-color: transparent;
+        color: #0071BA; // Màu nút đóng
+        border: none;
+        font-size: 24px;
+      }
+    }
+
+    .modal-user-body {
+      padding: 20px; // Thêm padding cho phần nội dung của modal
+
+      .input-container {
+        margin-bottom: 15px; // Thêm khoảng cách dưới mỗi input
+        width: 100%;
+
+        &.max-width-input {
+          width: 100%;
+        }
+
+        input {
+          width: 100%;
+          border-radius: 5px; // Bo góc cho input
+          height: 35px; // Thay đổi kích thước input
+          padding: 0 12px;
+          border: 1px solid #ccc; // Màu viền nhẹ nhàng cho input
+          outline: none;
+        }
+      }
+    }
+  }
+}
+
+// Tùy chỉnh thông báo toast
+.Toastify__toast-container {
+  z-index: 9999; // Đảm bảo thông báo nằm trên cùng
+}
+
+.Toastify__toast {
+  font-family: 'Arial', sans-serif;
+  font-size: 16px; // Kích thước chữ lớn hơn cho dễ đọc
+  border-radius: 6px;
+  padding: 15px;
+}
+
+.Toastify__toast--success {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.Toastify__toast--error {
+  background-color: #f44336;
+  color: #fff;
+}

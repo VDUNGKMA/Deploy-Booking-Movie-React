@@ -1,0 +1,130 @@
+.login-background {
+    background: linear-gradient(to right, #4b6cb7, #182848);
+    height: 100vh;
+    font-family: "Poppins";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .login-container {
+        width: 400px;
+        border: 1px solid #e6e9f9;
+        border-radius: 10px;
+        background: #f1f7fe;
+        font-size: 16px;
+        overflow: hidden;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+
+        &:hover {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-content {
+            padding: 2rem;
+
+            .text-login {
+                text-align: center;
+                font-size: 28px;
+                font-weight: 700;
+                color: #333;
+                margin-bottom: 1.5rem;
+            }
+
+            .form-group {
+                margin-bottom: 1.5rem;
+
+                label {
+                    display: block;
+                    font-size: 14px;
+                    color: #555;
+                    margin-bottom: 0.5rem;
+                }
+
+                input {
+                    width: 100%;
+                    padding: 0.7em;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    font-size: 16px;
+                    transition: border-color 0.3s ease;
+
+                    &:focus {
+                        border-color: #5a77e8;
+                        outline: none;
+                    }
+
+
+                }
+
+                span {
+                  
+                        content: "\f06e";
+                        position: relative;
+                        margin-left: 256px;
+                        top: -46px;
+                        cursor: pointer;
+                }
+
+
+
+            }
+
+            button {
+                background-color: #5a77e8;
+                color: #fff;
+                padding: 0.7em 1em;
+                border: none;
+                border-radius: 20px;
+                cursor: pointer;
+                font-size: 16px;
+                transition: background-color 0.3s ease;
+                width: 344px;
+
+                &:hover {
+                    background-color: #3a4ca2;
+                }
+            }
+
+            span {
+                color: #666;
+                font-size: 14px;
+                text-align: center;
+                display: block;
+                margin-top: 1rem;
+                margin-left: 197px;
+                &:hover {
+                    color:#2000a2;
+                    cursor: pointer;
+                    background-color: yellow;
+                }
+                
+            }
+
+            .social-login {
+                .fa-facebook:before {
+                    content: "\f09a";
+                    font-size: 37px;
+                    background: white;
+                    color: dodgerblue;
+                    margin-left: 129px;
+                    margin-right: 11px;
+                }
+
+                .fa-google-plus:before {
+                    content: "\f2b3";
+                    font-size: 37px;
+                    background: red;
+                    color: white;
+                    border-radius: 134px;
+                    margin-right: 5px;
+                }
+
+
+            }
+
+        }
+
+
+    }
+}

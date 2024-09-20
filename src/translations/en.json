@@ -1,0 +1,132 @@
+{
+    "homeheader": {
+        "speciality": "Medical speciality",
+        "search_doctor": "Find a doc doctor by speciality",
+        "Health_facilities": "Health facilities",
+        "select_room": "Choose a hospital or clinic",
+        "doctor": "Doctor",
+        "select_doctor": "Choose a good doctor",
+        "fee": "Examination package",
+        "General_health_check": "General health check",
+        "support": "Support",
+        "Welcome": "Welcome, "
+    },
+    "banner": {
+        "title1": "Medical Foundation",
+        "title2": "Comprehensive Health Care",
+        "child1": "Specialized examination",
+        "child2": "Remote examination",
+        "child3": "General examination",
+        "child4": "Medical Examination",
+        "child5": "Mental health",
+        "child6": "Dental examination"
+    },
+    "login": {
+        "login": "Login",
+        "username": "Username",
+        "password": "Password",
+        "userpass-wrong": "Invalid username or password!"
+    },
+    "menu": {
+        "system": {
+            "header": "System",
+            "system-administrator": {
+                "header": "System Administrator",
+                "user-manage": "Create Movie",
+                "user-redux": "Manager user using redux"
+            },
+            "system-parameter": {
+                "header": "System-parameter"
+            }
+        },
+        "admin": {
+            "manager-user": "Users",
+            "manager-doctor": "Manage Doctors",
+            "manager-admin": "Manage Admins",
+            "crud": "CRUD user",
+            "crud-redux": "Update Movie",
+            "movie": "Movie",
+            "manage-movie": "Create Movie",
+            "genres": "Genres",
+            "manage-genres": "Manage Genres",
+            "handbook": "Handbook",
+            "manage-handbook": "Manage Handbook"
+        },
+        "doctor": {
+            "manage-schedule": "Manage Doctor's schedule",
+            "manage-patient": "Manage Doctor's Patient"
+        }
+    },
+    "manage-user": {
+        "add": "Add new User",
+        "email": "Email",
+        "password": "Password",
+        "firstname": "FirstName",
+        "lastname": "LastName",
+        "mobilephone": "MobilePhone",
+        "address": "Address",
+        "gender": "Gender",
+        "position": "Position",
+        "role": "Role",
+        "avatar": "Avatar",
+        "save": "Save User",
+        "edit": "Save change"
+    },
+    "homepage": {
+        "outstanding-doctor": "Last week's featured doctor",
+        "more-info": "More Info",
+        "specialty-popular": "Popular Specialties"
+    },
+    "manage-schedule": {
+        "title": "Manage doctor's examination plan",
+        "choose-doctor": "Choose doctor",
+        "choose-date": "Choose date",
+        "save": "Save Info"
+    },
+    "patient": {
+        "detail-doctor": {
+            "schedule": "Schedule",
+            "no-schedule": "Doctors do not have appointments during this time. Please choose another time",
+            "choose": "Choose ",
+            "book-free": " and book(free)"
+        },
+        "extra-doctor-info": {
+            "text-address": "Address of Examination",
+            "price": "Examination price",
+            "detail": "See details",
+            "payment": "The patient can pay the cost in the form of: ",
+            "hide-price": "Hide price list"
+        },
+        "booking-modal": {
+            "title": "Information on scheduling medical examinations",
+            "fullName": "FullName",
+            "phoneNumber": "Phone Number",
+            "email": "Email",
+            "address": "Address",
+            "reason": "Reason",
+            "birthday": "Date of birth",
+            "gender": "Gender",
+            "btnConfirm": "Confirm",
+            "btnCancel": "Cancel",
+            "priceBooking": "Free Booking",
+            "price": "Price: "
+        }
+    },
+    "admin": {
+        "manage-doctor": {
+            "title": "Create more infomation doctors",
+            "select-doctor": "Choose doctor ",
+            "intro": "Introduction Infomation",
+            "add": "Create Info",
+            "save": "Save Info",
+            "price": "Price",
+            "province": "Province",
+            "payment": "Payment",
+            "nameClinic": "Clinic's Name",
+            "addressClinic": "Clinic's Address ",
+            "note": "Note",
+            "specialty": "Choose Specialty",
+            "select-clinic": "Clinic"
+        }
+    }
+}
