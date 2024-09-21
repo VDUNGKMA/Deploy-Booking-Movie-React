@@ -49,11 +49,11 @@
             "manage-movie": "Create Movie",
             "genres": "Genres",
             "manage-genres": "Manage Genres",
-            "handbook": "Handbook",
-            "manage-handbook": "Manage Handbook"
+            "show-time": "Show time",
+            "manage-show-time": "Manage Show Time"
         },
         "doctor": {
-            "manage-schedule": "Manage Doctor's schedule",
+            "manage-schedule": "Manage Cinema",
             "manage-patient": "Manage Doctor's Patient"
         }
     },

@@ -69,11 +69,11 @@
             "manage-movie": "Thêm Phim",
             "genres": "Thể loại phim",
             "manage-genres": "Quản lý thể loại phim",
-            "handbook": "Cẩm nang",
-            "manage-handbook": "Quản lý cẩm nang"
+            "show-time": "Suất chiếu",
+            "manage-show-time": "Quản lý suất chiếu"
         },
         "doctor": {
-            "manage-schedule": "Quản lý kế hoạch khám bệnh",
+            "manage-schedule": "Quản lý rạp chiếu phim",
             "manage-patient": "Quản lý bệnh nhân khám bệnh"
         }
     },

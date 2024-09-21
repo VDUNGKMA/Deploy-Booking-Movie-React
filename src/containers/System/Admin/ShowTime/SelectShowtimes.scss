@@ -1,0 +1,110 @@
+/* src/containers/System/Admin/Showtime/SelectShowtimes.scss */
+
+.select-showtimes-container {
+    padding: 20px;
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    .search-form {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        max-width: 400px;
+    }
+
+    .showtimes-table {
+        margin-top: 20px;
+    }
+
+    .loading-spinner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+    }
+
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .pagination {
+        display: flex;
+        list-style: none;
+        padding: 0;
+
+        li {
+            margin: 0 5px;
+
+            a {
+                padding: 8px 12px;
+                border: 1px solid #dee2e6;
+                border-radius: 4px;
+                cursor: pointer;
+                color: #007bff;
+                text-decoration: none;
+
+                &:hover {
+                    background-color: #e9ecef;
+                }
+            }
+
+            &.active a {
+                background-color: #007bff;
+                color: white;
+                border-color: #007bff;
+            }
+
+            &.break-me a {
+                cursor: default;
+            }
+        }
+    }
+
+    .limit-selector {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-top: 10px;
+
+        Label {
+            margin-right: 10px;
+        }
+
+        select {
+            width: 80px;
+        }
+    }
+
+    .actions {
+        margin-bottom: 20px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .select-showtimes-container {
+            padding: 10px;
+
+            .search-form, .limit-selector {
+                max-width: 100%;
+                justify-content: center;
+            }
+
+            .limit-selector {
+                flex-direction: column;
+                align-items: center;
+
+                Label {
+                    margin-bottom: 5px;
+                }
+            }
+
+            .actions {
+                display: flex;
+                justify-content: center;
+            }
+        }
+    }
+}

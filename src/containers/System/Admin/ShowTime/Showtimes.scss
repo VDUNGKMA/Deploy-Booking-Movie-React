@@ -1,0 +1,100 @@
+/* src/containers/System/Admin/Showtimes.scss */
+
+.showtimes-container {
+    padding: 20px;
+
+    .actions {
+        margin-bottom: 20px;
+    }
+
+    .search-bar {
+        margin-bottom: 20px;
+        max-width: 400px;
+    }
+
+    .showtimes-table {
+        margin-bottom: 20px;
+    }
+
+    .loading-spinner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+    }
+
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+
+        .pagination {
+            display: flex;
+            list-style: none;
+            padding: 0;
+
+            li {
+                margin: 0 5px;
+
+                a {
+                    padding: 8px 12px;
+                    border: 1px solid #dee2e6;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    color: #007bff;
+                    text-decoration: none;
+
+                    &:hover {
+                        background-color: #e9ecef;
+                    }
+                }
+
+                &.active a {
+                    background-color: #007bff;
+                    color: white;
+                    border-color: #007bff;
+                }
+
+                &.break-me a {
+                    cursor: default;
+                }
+            }
+        }
+    }
+
+    .limit-selector {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-bottom: 20px;
+
+        Label {
+            margin-right: 10px;
+        }
+
+        select {
+            width: 100px;
+        }
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .showtimes-container {
+        padding: 10px;
+
+        .search-bar, .limit-selector {
+            max-width: 100%;
+            justify-content: center;
+        }
+
+        .limit-selector {
+            flex-direction: column;
+            align-items: center;
+
+            Label {
+                margin-bottom: 5px;
+            }
+        }
+    }
+}

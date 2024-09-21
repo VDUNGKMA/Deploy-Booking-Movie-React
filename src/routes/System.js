@@ -9,6 +9,8 @@ import ManageCinema from '../containers/System/Doctor/ManageCinema';
 import GenresList from '../containers/System/Genres/ManageGenre';
 import ManageMovie from '../containers/System/Admin/Movie/CreateMovie';
 import ManageSeats from '../containers/System/Doctor/ManageSeats';
+import Showtimes from '../containers/System/Admin/ShowTime/Showtimes';
+import SelectShowtimes from '../containers/System/Admin/ShowTime/SelectShowtimes';
 class System extends Component {
     render() {
         const { systemMenuPath, isLoggedIn } = this.props;
@@ -25,7 +27,8 @@ class System extends Component {
                             <Route path="/system/cinemas/:cinemaId/theaters/:theaterId/seats" component={ManageSeats} />
                             <Route path="/system/manage-genres" component={GenresList} />
                             <Route path="/system/manage-movie" component={ManageMovie} />
-
+                            <Route path="/system/showtimes/select" component={SelectShowtimes} /> {/* Thêm route mới */}
+                            <Route path="/system/theaters/:theaterId/showtimes" component={Showtimes} />
 
 
                             <Route component={() => { return (<Redirect to={systemMenuPath} />) }} />

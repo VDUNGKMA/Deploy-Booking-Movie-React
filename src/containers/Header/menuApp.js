@@ -53,10 +53,10 @@ export const adminMenu = [
         ]
     },
     { //Quản lý cẩm nang
-        name: 'menu.admin.handbook',
+        name: 'menu.admin.show-time',
         menus: [
             {
-                name: 'menu.admin.manage-handbook', link: '/system/manage-handbook'
+                name: 'menu.admin.manage-show-time', link: '/system/showtimes/select'
 
             },
         ]

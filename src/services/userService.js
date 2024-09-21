@@ -313,6 +313,64 @@ const getSeatsByTheaterAdminApi = (theaterId, page = 1, limit = 10, sortField = 
 const updateSeatStatusApi = (theaterId, seatId, status) => {
      return axios.patch(`/api/admin/theaters/${theaterId}/seats/${seatId}/status`, { status });
 };
+// Hàm lấy danh sách suất chiếu với phân trang
+const getShowtimesApi = (theaterId, page = 1, limit = 10, sortField = 'start_time', sortOrder = 'ASC', search = '') => {
+     return axios.get(`/api/admin/theaters/${theaterId}/showtimes`, {
+          params: { page, limit, sortField, sortOrder, search },
+     });
+};
+const getShowtimesByTheaterApi = (theaterId, page = 1, limit = 10, sortField = 'start_time', sortOrder = 'ASC', search = '') => {
+     return axios.get(`/api/admin/theaters/${theaterId}/get-showtimes`, {
+          params: { page, limit, sortField, sortOrder, search },
+     });
+};
+// Hàm lấy chi tiết một suất chiếu
+const getShowtimeByIdApi = (showtimeId) => {
+     return axios.get(`/api/admin/showtimes/${showtimeId}`);
+     
+};
+
+// Hàm tạo mới suất chiếu
+const createShowtimeApi = (theaterId, showtimeData) => {
+     const token = localStorage.getItem('token'); // Get token from localStorage
+     if (token) {
+          return axios.post(`/api/admin/theaters/${theaterId}/showtimes`, showtimeData, {
+               headers: {
+                    Authorization: `Bearer ${token}` // Attach token to the request headers
+               }
+          });
+     } else {
+          return Promise.reject('No token found');
+     }
+};
+
+// Hàm cập nhật suất chiếu
+const updateShowtimeApi = (showtimeId, showtimeData) => {
+     const token = localStorage.getItem('token'); // Get token from localStorage
+     if (token) {
+          return axios.put(`/api/admin/showtimes/${showtimeId}`, showtimeData, {
+               headers: {
+                    Authorization: `Bearer ${token}` // Attach token to the request headers
+               }
+          });
+     } else {
+          return Promise.reject('No token found');
+     }
+};
+
+// Hàm xóa suất chiếu
+const deleteShowtimeApi = (showtimeId) => {
+     const token = localStorage.getItem('token'); // Get token from localStorage
+     if (token) {
+          return axios.delete(`/api/admin/showtimes/${showtimeId}`, {
+               headers: {
+                    Authorization: `Bearer ${token}` // Attach token to the request headers
+               }
+          });
+     } else {
+          return Promise.reject('No token found');
+     }
+};
 const getAllCodeService = (inputType) => {
      return axios.get(`/api/allcode?type=${inputType}`)
 }
@@ -401,6 +459,12 @@ export {
      updateSeatApi,
      deleteSeatApi,
      updateSeatStatusApi,
+     getShowtimesApi,
+     getShowtimesByTheaterApi, 
+     getShowtimeByIdApi,
+     createShowtimeApi,
+     updateShowtimeApi,
+     deleteShowtimeApi,
      getAllCodeService,
      getTopDoctorHomeService,
      getAllDoctors,
