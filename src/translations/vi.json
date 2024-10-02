@@ -70,7 +70,9 @@
             "genres": "Thể loại phim",
             "manage-genres": "Quản lý thể loại phim",
             "show-time": "Suất chiếu",
-            "manage-show-time": "Quản lý suất chiếu"
+            "manage-show-time": "Quản lý suất chiếu",
+            "cinemas": "Rạp chiếu phim",
+            "manage-cinemas": "Quản lý rạp chiếu phim"
         },
         "doctor": {
             "manage-schedule": "Quản lý rạp chiếu phim",

@@ -37,116 +37,27 @@
             justify-content: center;
             position: relative;
 
-            .seat-number {
-                margin-left: 5px;
-            }
-
-            &.available.normal {
-                background-color: #28a745;
-                border-color: #28a745;
-                color: #fff;
-
-                &:hover {
-                    background-color: #218838;
-                    border-color: #1e7e34;
-                }
-            }
-
-            &.reserved.normal {
-                background-color: #ffc107;
-                border-color: #ffc107;
-                color: #212529;
-
-                &:hover {
-                    background-color: #e0a800;
-                    border-color: #d39e00;
-                }
-            }
-
-            &.booked.normal {
-                background-color: #dc3545;
-                border-color: #dc3545;
-                color: #fff;
-                cursor: not-allowed;
-
-                &:hover {
-                    background-color: #c82333;
-                    border-color: #bd2130;
-                }
-            }
-
-            &.available.vip {
-                background-color: #007bff;
-                border-color: #007bff;
-                color: #fff;
-
-                &:hover {
-                    background-color: #0069d9;
-                    border-color: #0062cc;
-                }
-            }
-
-            &.reserved.vip {
-                background-color: #17a2b8;
-                border-color: #17a2b8;
-                color: #fff;
-
-                &:hover {
-                    background-color: #138496;
-                    border-color: #117a8b;
-                }
-            }
-
-            &.booked.vip {
-                background-color: #6c757d;
-                border-color: #6c757d;
-                color: #fff;
-                cursor: not-allowed;
-
-                &:hover {
-                    background-color: #5a6268;
-                    border-color: #545b62;
-                }
-            }
-
-            &.available.couple {
-                background-color: #28a745;
-                border-color: #28a745;
-                color: #fff;
-
-                &:hover {
-                    background-color: #218838;
-                    border-color: #1e7e34;
-                }
-            }
-
-            &.reserved.couple {
-                background-color: #ffc107;
-                border-color: #ffc107;
-                color: #212529;
-
-                &:hover {
-                    background-color: #e0a800;
-                    border-color: #d39e00;
-                }
-            }
-
-            &.booked.couple {
-                background-color: #dc3545;
-                border-color: #dc3545;
-                color: #fff;
-                cursor: not-allowed;
-
-                &:hover {
-                    background-color: #c82333;
-                    border-color: #bd2130;
-                }
-            }
+            
         }
-    }
+        .seat.normal {
+            background-color:   #28a75b;
+        }
 
-    /* Tooltip Style Override (Optional) */
-    .tooltip-inner {
-        font-size: 14px;
+        .seat.vip {
+            background-color: #007bff;
+        }
+
+        .seat.couple {
+            background-color: #d1ea11;
+        }
+
+        .seat:hover {
+            opacity: 0.3;
+        }
+
+        .seat-number {
+            margin-left: 5px;
+            font-size: 12px;
+        }
     }
 }

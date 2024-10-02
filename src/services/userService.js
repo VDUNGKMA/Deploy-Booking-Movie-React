@@ -1,5 +1,7 @@
 import axios from '../axios'
 
+
+
 const handleLoginApi = (email, password) => {
 
      return axios.post('/api/auth/login', { email, password })
@@ -65,7 +67,15 @@ const deleteUserService = (userId) => {
           return Promise.reject('No token found'); // Xử lý khi không có token
      }
 }
-
+const getUsersApi = async (page = 1, limit = 10, sortField = 'createdAt', sortOrder = 'DESC', search = '') => {
+     try {
+          const params = { page, limit, sortField, sortOrder, search };
+          const response = await axios.get(`/api/admin/get-users`, { params })
+          return response
+     } catch (error) {
+          throw error.response
+     }
+};
 const editUserService = (userId, formData) => {
      const token = localStorage.getItem('token'); // Lấy token từ localStorage
      if (token) {
@@ -194,7 +204,7 @@ const updateCinemaApi = (cinemaId, data) => {
      } else {
           return Promise.reject('No token found');
      }
-     
+
 };
 
 const deleteCinemaApi = (cinemaId) => {
@@ -262,56 +272,127 @@ const deleteTheaterApi = (theaterId) => {
      }
 };
 // API quản lý ghế
- const getSeatsByTheaterApi = (theaterId) => {
-      return axios.get(`/api/admin/theaters/${theaterId}/seats`);
-};
-// Hàm lấy danh sách ghế với phân trang cho quản trị viên
-const getSeatsByTheaterAdminApi = (theaterId, page = 1, limit = 10, sortField = 'id', sortOrder = 'ASC', search = '') => {
-     return axios.get(`/api/admin/theaters/${theaterId}/seats/admin`, {
-          params: { page, limit, sortField, sortOrder, search },
-     });
-};
- const createSeatApi = (theaterId, seatData) => {
-      const token = localStorage.getItem('token'); // Get token from localStorage
-      if (token) {
-           return axios.post(`/api/admin/theaters/${theaterId}/seats`, seatData, {
-                headers: {
-                     Authorization: `Bearer ${token}` // Attach token to the request headers
-                }
-           });
-      } else {
-           return Promise.reject('No token found');
-      }
+// const getSeatsByTheaterApi = (theaterId) => {
+//      return axios.get(`/api/admin/theaters/${theaterId}/seats`);
+// };
+// // Hàm lấy danh sách ghế với phân trang cho quản trị viên
+// const getSeatsByTheaterAdminApi = (theaterId, page = 1, limit = 10, sortField = 'id', sortOrder = 'ASC', search = '') => {
+//      return axios.get(`/api/admin/theaters/${theaterId}/seats/admin`, {
+//           params: { page, limit, sortField, sortOrder, search },
+//      });
+// };
+// const createSeatApi = (theaterId, seatData) => {
+//      const token = localStorage.getItem('token'); // Get token from localStorage
+//      if (token) {
+//           return axios.post(`/api/admin/theaters/${theaterId}/seats`, seatData, {
+//                headers: {
+//                     Authorization: `Bearer ${token}` // Attach token to the request headers
+//                }
+//           });
+//      } else {
+//           return Promise.reject('No token found');
+//      }
+// };
+
+// const updateSeatApi = (theaterId, seatId, seatData) => {
+//      const token = localStorage.getItem('token'); // Get token from localStorage
+//      if (token) {
+//           return axios.put(`/api/admin/theaters/${theaterId}/seats/${seatId}`, seatData, {
+//                headers: {
+//                     Authorization: `Bearer ${token}` // Attach token to the request headers
+//                }
+//           });
+//      } else {
+//           return Promise.reject('No token found');
+//      }
+// };
+
+// const deleteSeatApi = (theaterId, seatId) => {
+//      const token = localStorage.getItem('token'); // Get token from localStorage
+//      if (token) {
+//           return axios.delete(`/api/admin/theaters/${theaterId}/seats/${seatId}`, {
+//                headers: {
+//                     Authorization: `Bearer ${token}` // Attach token to the request headers
+//                }
+//           });
+//      } else {
+//           return Promise.reject('No token found');
+//      }
+// };
+
+// const updateSeatStatusApi = (theaterId, seatId, status) => {
+//      return axios.patch(`/api/admin/theaters/${theaterId}/seats/${seatId}/status`, { status });
+// };
+// Lấy tất cả ghế cho SeatLayout
+const getSeatsByTheaterApi = async (theaterId) => {
+     try {
+          const response = await axios.get(`/api/admin/theaters/${theaterId}/seats`);
+          return response;
+     } catch (error) {
+          throw error.response;
+     }
 };
 
- const updateSeatApi = (theaterId, seatId, seatData) => {
-      const token = localStorage.getItem('token'); // Get token from localStorage
-      if (token) {
-           return axios.put(`/api/admin/theaters/${theaterId}/seats/${seatId}`, seatData, {
-                headers: {
-                     Authorization: `Bearer ${token}` // Attach token to the request headers
-                }
-           });
-      } else {
-           return Promise.reject('No token found');
-      }
+// Lấy danh sách ghế với phân trang cho bảng
+const getSeatsByTheaterAdminApi = async (theaterId, page, limit, sortField, sortOrder, search) => {
+     try {
+          const response = await axios.get(`/api/admin/theaters/${theaterId}/seats/admin`, {
+               params: {
+                    page,
+                    limit,
+                    sortField,
+                    sortOrder,
+                    search,
+               }
+          });
+          console.log("check get seat by theater api ", response)
+          return response;
+     } catch (error) {
+          throw error.response;
+     }
 };
 
- const deleteSeatApi = (theaterId, seatId) => {
-      const token = localStorage.getItem('token'); // Get token from localStorage
-      if (token) {
-           return axios.delete(`/api/admin/theaters/${theaterId}/seats/${seatId}`, {
-                headers: {
-                     Authorization: `Bearer ${token}` // Attach token to the request headers
-                }
-           });
-      } else {
-           return Promise.reject('No token found');
-      }
-};
+// Thêm ghế ngồi
 
-const updateSeatStatusApi = (theaterId, seatId, status) => {
-     return axios.patch(`/api/admin/theaters/${theaterId}/seats/${seatId}/status`, { status });
+const createSeatApi = (theaterId, seatData) => {
+     const token = localStorage.getItem('token'); // Get token from localStorage
+     if (token) {
+          return axios.post(`/api/admin/theaters/${theaterId}/seats`, seatData, {
+               headers: {
+                    Authorization: `Bearer ${token}` // Attach token to the request headers
+               }
+          });
+     } else {
+          return Promise.reject('No token found');
+     }
+};
+// Sửa ghế ngồi
+
+const updateSeatApi = (theaterId, seatId, seatData) => {
+     const token = localStorage.getItem('token'); // Get token from localStorage
+     if (token) {
+          return axios.put(`/api/admin/theaters/${theaterId}/seats/${seatId}`, seatData, {
+               headers: {
+                    Authorization: `Bearer ${token}` // Attach token to the request headers
+               }
+          });
+     } else {
+          return Promise.reject('No token found');
+     }
+};
+// Xóa ghế ngồi
+
+const deleteSeatApi = (theaterId, seatId) => {
+     const token = localStorage.getItem('token'); // Get token from localStorage
+     if (token) {
+          return axios.delete(`/api/admin/theaters/${theaterId}/seats/${seatId}`, {
+               headers: {
+                    Authorization: `Bearer ${token}` // Attach token to the request headers
+               }
+          });
+     } else {
+          return Promise.reject('No token found');
+     }
 };
 // Hàm lấy danh sách suất chiếu với phân trang
 const getShowtimesApi = (theaterId, page = 1, limit = 10, sortField = 'start_time', sortOrder = 'ASC', search = '') => {
@@ -319,22 +400,36 @@ const getShowtimesApi = (theaterId, page = 1, limit = 10, sortField = 'start_tim
           params: { page, limit, sortField, sortOrder, search },
      });
 };
-const getShowtimesByTheaterApi = (theaterId, page = 1, limit = 10, sortField = 'start_time', sortOrder = 'ASC', search = '') => {
-     return axios.get(`/api/admin/theaters/${theaterId}/get-showtimes`, {
-          params: { page, limit, sortField, sortOrder, search },
+// **3. API cho Ghế theo Showtime**
+const getSeatsByShowtimeApi = async (showtimeId) => {
+     try {
+          const response = await axios.get(`/api/admin/${showtimeId}/seats`)
+          return response
+     } catch (error) {
+          throw error.response
+     }
+};
+// const getShowtimesByTheaterApi = (theaterId, page = 1, limit = 10, sortField = 'start_time', sortOrder = 'ASC', search = '') => {
+//      return axios.get(`/api/admin/theaters/${theaterId}/get-showtimes`, {
+//           params: { page, limit, sortField, sortOrder, search },
+//      });
+// };
+const getShowtimesByTheaterApi = (theaterId, page, limit, sortField, sortOrder, search) => {
+     return axios.get(`/api/admin/showtimes`, {
+          params: { theaterId, page, limit, sortField, sortOrder, search },
      });
 };
 // Hàm lấy chi tiết một suất chiếu
 const getShowtimeByIdApi = (showtimeId) => {
      return axios.get(`/api/admin/showtimes/${showtimeId}`);
-     
+
 };
 
 // Hàm tạo mới suất chiếu
-const createShowtimeApi = (theaterId, showtimeData) => {
+const createShowtimeApi = (showtimeData) => {
      const token = localStorage.getItem('token'); // Get token from localStorage
      if (token) {
-          return axios.post(`/api/admin/theaters/${theaterId}/showtimes`, showtimeData, {
+          return axios.post(`/api/admin/showtimes`, showtimeData, {
                headers: {
                     Authorization: `Bearer ${token}` // Attach token to the request headers
                }
@@ -371,6 +466,56 @@ const deleteShowtimeApi = (showtimeId) => {
           return Promise.reject('No token found');
      }
 };
+// **1. API cho Vé**
+
+const createTicketApi = async (ticketData) => {
+     try {
+          const response = await axios.post(`/api/admin/tickets`, ticketData)
+          return response
+     } catch (error) {
+          throw error.response
+     }
+};
+
+const getTicketsForAdminApi = async (params) => {
+     try {
+          const response = await axios.get(`/api/admin/tickets`, { params })
+          return response
+     } catch (error) {
+          throw error.response
+     }
+};
+const cancelTicketApi = async (ticketId) => {
+     try {
+          const response = await axios.patch(`/api/admin/tickets/${ticketId}/cancel`, {}, {
+               // headers: {
+               //      Authorization: `Bearer ${localStorage.getItem('token')}`, // Hoặc cách bạn lưu token
+               // },
+          });
+          return response.data;
+     } catch (error) {
+          throw error.response.data;
+     }
+};
+// const getTicketByIdApi = async (ticketId) => {
+//      try {
+//           const response = await axios.get(`/api/admin/tickets/${ticketId}`)
+//           return response.data
+//      } catch (error) {
+//           throw error.response.data
+//      }
+// };
+
+// const cancelTicketApi = async (ticketId) => {
+//      try {
+//           const response = await axios.patch(`/api/admin/${ticketId}/cancel`)
+//           return response
+//      } catch (error) {
+//           throw error.response
+//      }
+// };
+
+
 const getAllCodeService = (inputType) => {
      return axios.get(`/api/allcode?type=${inputType}`)
 }
@@ -435,6 +580,7 @@ export {
      handleVerifyOtpApi,
      handleResetPasswordApi,
      getAllUsers,
+     getUsersApi,
      getUsersByRoleApi,
      createNewUserService, deleteUserService,
      editUserService,
@@ -458,13 +604,17 @@ export {
      createSeatApi,
      updateSeatApi,
      deleteSeatApi,
-     updateSeatStatusApi,
+     // updateSeatStatusApi,
+     getSeatsByShowtimeApi,
      getShowtimesApi,
-     getShowtimesByTheaterApi, 
+     getShowtimesByTheaterApi,
      getShowtimeByIdApi,
      createShowtimeApi,
      updateShowtimeApi,
      deleteShowtimeApi,
+     createTicketApi,
+     getTicketsForAdminApi,
+     cancelTicketApi,
      getAllCodeService,
      getTopDoctorHomeService,
      getAllDoctors,

@@ -7,7 +7,7 @@ export const adminMenu = [
 
             },
             {
-                name: 'menu.admin.manager-doctor', link: '/system/manage-doctor'
+                name: 'menu.admin.manager-doctor', link: '/system/tickets'
                 // subMenus: [
                 //     { name: 'menu.system.system-administrator.user-manage', link: '/system/user-manage' },
                 //     { name: 'menu.system.system-administrator.user-redux', link: '/system/user-redux' },
@@ -21,10 +21,6 @@ export const adminMenu = [
             // { name: 'menu.system.system-parameter.header', link: '/system/system-parameter' },
             //Quản lý kế hoạch khám bênh bác sĩ
 
-            {
-                name: 'menu.doctor.manage-schedule', link: '/system/manage-cinemas'
-
-            },
 
 
             // { name: 'menu.system.system-parameter.header', link: '/system/system-parameter' },
@@ -60,7 +56,15 @@ export const adminMenu = [
 
             },
         ]
-    }
+    },
+
+    {// Quản lý rạp chiếu phim
+        name: 'menu.admin.cinemas',
+        menus: [
+            { name: 'menu.admin.manage-cinemas', link: '/system/manage-cinemas' }
+        ]
+
+    },
 
 ];
 export const doctorMenu = [

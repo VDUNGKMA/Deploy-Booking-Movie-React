@@ -472,7 +472,7 @@ class ManageCinema extends Component {
                                 <Input type="file" id="image" onChange={this.handleCinemaImageChange} />
                                 {previewImage && (
                                     <div className="preview-image">
-                                        <img src={previewImage} alt="Preview" />
+                                        <img src={previewImage} alt="Preview"/>
                                     </div>
                                 )}
                             </FormGroup>

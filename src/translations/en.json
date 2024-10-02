@@ -50,7 +50,9 @@
             "genres": "Genres",
             "manage-genres": "Manage Genres",
             "show-time": "Show time",
-            "manage-show-time": "Manage Show Time"
+            "manage-show-time": "Manage Show Time",
+            "cinemas": "Cinemas",
+           "manage-cinemas": "Manage Cinemas"
         },
         "doctor": {
             "manage-schedule": "Manage Cinema",

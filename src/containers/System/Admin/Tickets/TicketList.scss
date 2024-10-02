@@ -1,0 +1,91 @@
+
+// TicketList.scss
+
+.ticket-list-container {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.search-form {
+    margin-bottom: 1rem;
+}
+
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.limit-selector {
+    margin-top: 1rem;
+}
+
+.table thead th {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.table tbody td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.badge-success {
+    background-color: #28a745;
+}
+
+.badge-danger {
+    background-color: #dc3545;
+}
+
+/* Tùy chỉnh ReactPaginate */
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination li {
+    margin: 0 5px;
+}
+
+.pagination li a {
+    color: #007bff;
+    cursor: pointer;
+}
+
+.pagination li.active a {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination li.disabled a {
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+@media (max-width: 576px) {
+    .search-form {
+        margin-bottom: 0.5rem;
+    }
+
+    .actions {
+        justify-content: center;
+    }
+
+    .pagination-container {
+        justify-content: center;
+    }
+}

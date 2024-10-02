@@ -28,14 +28,6 @@ const SeatLayout = ({ seats, onSeatClick }) => {
                         {groupedSeats[row]
                             .sort((a, b) => a.number - b.number)
                             .map((seat) => (
-                                // <Button
-                                //     key={seat.id}
-                                //     className={`seat ${seat.status}`}
-                                //     onClick={() => onSeatClick(seat)}
-                                //     disabled={seat.status === 'booked'}
-                                // >
-                                //     {seat.number}
-                                // </Button>
                                 <SeatButton
                                     key={seat.id}
                                     seat={seat}
@@ -48,12 +40,13 @@ const SeatLayout = ({ seats, onSeatClick }) => {
         </div>
     );
 };
+
 const SeatButton = ({ seat, onClick }) => {
     const [tooltipOpen, setTooltipOpen] = React.useState(false);
     const toggle = () => setTooltipOpen(!tooltipOpen);
 
     // Xác định lớp CSS dựa trên loại ghế
-    const seatClass = `seat ${seat.status} ${seat.type.toLowerCase()}`;
+    const seatClass = `seat ${seat.type.toLowerCase()}`;
 
     // Chọn biểu tượng dựa trên loại ghế
     let SeatIcon;
@@ -74,7 +67,7 @@ const SeatButton = ({ seat, onClick }) => {
                 id={`seat-${seat.id}`}
                 className={seatClass}
                 onClick={onClick}
-                disabled={seat.status === 'booked'}
+                // Không còn disabled dựa trên status
                 size="sm"
             >
                 <SeatIcon />
@@ -86,11 +79,12 @@ const SeatButton = ({ seat, onClick }) => {
                 target={`seat-${seat.id}`}
                 toggle={toggle}
             >
-                {`Ghế ${seat.number} - ${seat.type} - ${seat.status}`}
+                {`Ghế ${seat.number} - ${seat.type}`}
             </Tooltip>
         </>
     );
 };
+
 SeatLayout.propTypes = {
     seats: PropTypes.arrayOf(
         PropTypes.shape({
@@ -99,12 +93,13 @@ SeatLayout.propTypes = {
             number: PropTypes.number.isRequired,
             type: PropTypes.string.isRequired,
             price: PropTypes.number.isRequired,
-            status: PropTypes.string.isRequired,// "available", "reserved", "booked"
-            type: PropTypes.string.isRequired, // "Normal", "VIP", "Couple"
+            // Loại bỏ trường 'status'
+            // status: PropTypes.string.isRequired, // Đã loại bỏ
         })
     ).isRequired,
     onSeatClick: PropTypes.func.isRequired,
 };
+
 SeatButton.propTypes = {
     seat: PropTypes.shape({
         id: PropTypes.number.isRequired,
@@ -112,8 +107,10 @@ SeatButton.propTypes = {
         number: PropTypes.number.isRequired,
         type: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,
-        status: PropTypes.string.isRequired,
+        // Loại bỏ trường 'status'
+        // status: PropTypes.string.isRequired, // Đã loại bỏ
     }).isRequired,
     onClick: PropTypes.func.isRequired,
 };
+
 export default SeatLayout;
