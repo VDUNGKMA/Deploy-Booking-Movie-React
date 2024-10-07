@@ -6,13 +6,7 @@ export const adminMenu = [
                 name: 'menu.admin.crud', link: '/system/user-manage'
 
             },
-            {
-                name: 'menu.admin.manager-doctor', link: '/system/tickets'
-                // subMenus: [
-                //     { name: 'menu.system.system-administrator.user-manage', link: '/system/user-manage' },
-                //     { name: 'menu.system.system-administrator.user-redux', link: '/system/user-redux' },
-                // ]
-            },
+
             // {
             //     name: 'menu.admin.manager-admin', link: '/system/user-admin'
 
@@ -26,7 +20,7 @@ export const adminMenu = [
             // { name: 'menu.system.system-parameter.header', link: '/system/system-parameter' },
         ]
     },
-    { //Quản lý phòng khám
+    { //Quản lý phim
         name: 'menu.admin.movie',
         menus: [
             {
@@ -48,7 +42,7 @@ export const adminMenu = [
             },
         ]
     },
-    { //Quản lý cẩm nang
+    { //Quản lý suất chiếu
         name: 'menu.admin.show-time',
         menus: [
             {
@@ -65,25 +59,51 @@ export const adminMenu = [
         ]
 
     },
+    {// Quản lý vé
+        name: 'menu.admin.tickets',
+        menus: [
+            {
+                name: 'menu.admin.manage-tickets', link: '/system/tickets'
+            },
+        ]
+
+    },
+    {// Thống kê
+        name: 'menu.admin.revenue',
+        menus: [
+            {
+                name: 'menu.admin.manage-revenue', link: '/system/revenue'
+            },
+            {
+                name: 'menu.admin.manage-revenue-by-movie', link: '/system/revenue-by-movie'
+            },
+            {
+                name: 'menu.admin.manage-revenue-by-showtime', link: '/system/revenue-by-showtime'
+            },
+
+        ]
+
+    },
+
 
 ];
 export const doctorMenu = [
-    {
-        name: 'menu.admin.manager-user',
-
+    { //Quản lý thể loại phim
+        name: 'menu.staff.screening-room',
         menus: [
             {
-                name: 'menu.doctor.manage-schedule', link: '/doctor/manage-schedule',
-
+                name: 'menu.staff.manag-screening-room', link: '/system/staff/theater'
 
             },
-            //Quản lý bệnh nhân khám bệnh
-
+        ]
+    },
+    { //Quản lý suất chiếu
+        name: 'menu.staff.validate_ticket',
+        menus: [
             {
-                name: 'menu.doctor.manage-patient', link: '/doctor/manage-patient'
+                name: 'menu.staff.manage-validate_ticket', link: '/system/staff/scan-qr'
 
-            }
-            // { name: 'menu.system.system-parameter.header', link: '/system/system-parameter' },
+            },
         ]
     },
 

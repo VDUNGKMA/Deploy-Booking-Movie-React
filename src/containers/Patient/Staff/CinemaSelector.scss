@@ -1,0 +1,53 @@
+.cinema-selector {
+    max-width: 800px;
+    margin: 0 auto;
+    // padding: 40px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    h1 {
+        font-size: 1.8rem;
+        color: #333;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    label {
+        display: block;
+      
+        margin-bottom: 10px;
+        font-weight: 500;
+        color: #555;
+        font-size: 1rem;
+    }
+
+    select {
+        width: 100%;
+        padding: 8px;
+        font-size: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        outline: none;
+        &:focus {
+            border-color: #4caf50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+    }
+
+    .theater-list {
+        margin-top: 20px;
+
+        p {
+            font-size: 1rem;
+            color: #777;
+            text-align: center;
+        }
+
+        // Display theater details in a grid layout
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+    }
+}

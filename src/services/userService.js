@@ -497,23 +497,9 @@ const cancelTicketApi = async (ticketId) => {
           throw error.response.data;
      }
 };
-// const getTicketByIdApi = async (ticketId) => {
-//      try {
-//           const response = await axios.get(`/api/admin/tickets/${ticketId}`)
-//           return response.data
-//      } catch (error) {
-//           throw error.response.data
-//      }
-// };
 
-// const cancelTicketApi = async (ticketId) => {
-//      try {
-//           const response = await axios.patch(`/api/admin/${ticketId}/cancel`)
-//           return response
-//      } catch (error) {
-//           throw error.response
-//      }
-// };
+
+
 
 
 const getAllCodeService = (inputType) => {
@@ -574,6 +560,94 @@ const getAllPatientForDoctor = (data) => {
 const postSendRemedy = (data) => {
      return axios.post('/api/send-remedy', data)
 }
+const getDailyRevenueByTheater = async (cinemaId, date) => {
+     try {
+          const response = await axios.get('/api/admin/revenue/daily', {
+               params: { cinemaId, date }
+          });
+          return response;
+     } catch (error) {
+          console.error('Error fetching daily revenue by theater:', error);
+          throw error;
+     }
+};
+const getMonthlyRevenueByTheater = async (cinemaId, month, year) => {
+     try {
+          const response = await axios.get('/api/admin/revenue/monthly', {
+               params: { cinemaId, month, year }
+          });
+          return response;
+     } catch (error) {
+          console.error('Error fetching monthly revenue by theater:', error);
+          throw error;
+     }
+};
+const getYearlyRevenueByTheater = async (cinemaId, year) => {
+     try {
+          const response = await axios.get('/api/admin/revenue/yearly', {
+               params: { cinemaId, year }
+          });
+          return response;
+     } catch (error) {
+          console.error('Error fetching yearly revenue by theater:', error);
+          throw error;
+     }
+};
+const getTotalDailyRevenue = async (date) => {
+     try {
+          const response = await axios.get('/api/admin/revenue/total/daily', {
+               params: { date }
+          });
+          return response;
+     } catch (error) {
+          console.error('Error fetching total daily revenue:', error);
+          throw error;
+     }
+};
+const getTotalMonthlyRevenue = async (month, year) => {
+     try {
+          const response = await axios.get('/api/admin/revenue/total/monthly', {
+               params: { month, year }
+          });
+          return response;
+     } catch (error) {
+          console.error('Error fetching total monthly revenue:', error);
+          throw error;
+     }
+};
+const getTotalYearlyRevenue = async (year) => {
+     try {
+          const response = await axios.get('/api/admin/revenue/total/yearly', {
+               params: { year }
+          });
+          return response;
+     } catch (error) {
+          console.error('Error fetching total yearly revenue:', error);
+          throw error;
+     }
+};
+// Lấy danh sách phòng chiếu trong rạp cụ thể
+const fetchTheatersByCinema = async (cinemaId) => {
+     const response = await axios.get(`/api/staff/theaters`, { params: { cinemaId } });
+     return response;
+};
+
+// Lấy sơ đồ ghế ngồi theo suất chiếu
+const fetchSeatsByShowtime = async (theaterId, showtimeId) => {
+     const response = await axios.get(`/api/staff/theaters/${theaterId}/showtimes/${showtimeId}/seats`, { params: { theaterId, showtimeId } });
+     return response;
+};
+
+// Lấy trạng thái phòng chiếu
+const fetchTheaterStatus = async (theaterId, showtimeId) => {
+      const response = await axios.get(`/api/staff/theaters/${theaterId}/showtimes/${showtimeId}/status`);
+     return response;
+};
+const fetchShowtimesByTheater = async (theaterId, date) => {
+     return axios.get(`/api/staff/theaters/${theaterId}/showtimes`, {
+          params: { date },
+     });
+};
 export {
      handleLoginApi,
      handleForgotPasswordApi,
@@ -633,5 +707,16 @@ export {
      getAllClinic,
      getAllDetailClinicById,
      getAllPatientForDoctor,
-     postSendRemedy
+     postSendRemedy,
+     getDailyRevenueByTheater,
+     getMonthlyRevenueByTheater,
+     getYearlyRevenueByTheater,
+     getTotalDailyRevenue,
+     getTotalMonthlyRevenue,
+     getTotalYearlyRevenue,
+     fetchTheatersByCinema,
+     fetchSeatsByShowtime,
+     fetchTheaterStatus,
+     fetchShowtimesByTheater
+    
 }

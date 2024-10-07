@@ -72,11 +72,19 @@
             "show-time": "Suất chiếu",
             "manage-show-time": "Quản lý suất chiếu",
             "cinemas": "Rạp chiếu phim",
-            "manage-cinemas": "Quản lý rạp chiếu phim"
+            "manage-cinemas": "Quản lý rạp chiếu phim",
+            "tickets": "Vé Xem Phim",
+            "manage-tickets" : "Quản lý vé",
+            "revenue": "Thống kê",
+            "manage-revenue": "Thống kê doanh  thu theo rạp",
+            "manage-revenue-by-movie": "Thống kê doanh thu theo phim",
+            "manage-revenue-by-showtime": "Thống kê doanh thu theo suất chiếu"
         },
-        "doctor": {
-            "manage-schedule": "Quản lý rạp chiếu phim",
-            "manage-patient": "Quản lý bệnh nhân khám bệnh"
+        "staff": {
+            "screening-room": "Phòng chiếu",
+            "manag-screening-room": "Quản lý phòng chiếu",
+            "validate_ticket": "Quét vé",
+            "manage-validate_ticket": "Xác thực vé"
         }
     },
     "manage-user": {

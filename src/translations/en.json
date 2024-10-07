@@ -52,11 +52,19 @@
             "show-time": "Show time",
             "manage-show-time": "Manage Show Time",
             "cinemas": "Cinemas",
-           "manage-cinemas": "Manage Cinemas"
+           "manage-cinemas": "Manage Cinemas",
+           "tickets": "Tickets",
+           "manage-tickets" : "Manage Tickets",
+           "revenue" : "Revenue",
+           "manage-revenue": "Revenue statistics by theater",
+           "manage-revenue-by-movie":"Revenue by movie",
+           "manage-revenue-by-showtime": "Revenue by showtime"
         },
-        "doctor": {
-            "manage-schedule": "Manage Cinema",
-            "manage-patient": "Manage Doctor's Patient"
+        "staff": {
+            "screening-room": "Screening room",
+            "manag-screening-room": "Manage screening room",
+            "validate_ticket": "Scan ticket",
+            "manage-validate_ticket": "Validate Ticket"
         }
     },
     "manage-user": {
