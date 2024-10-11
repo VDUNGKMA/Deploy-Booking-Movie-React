@@ -143,7 +143,12 @@ const RevenueDashboard = () => {
                                 {revenue.map((rev, index) => (
                                     <tr key={index}>
                                         <td>{selectedCinema === 'all' ? 'Tất cả phòng chiếu' : rev.theaterName}</td>
-                                        <td>{rev.totalRevenue.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>
+                                        <td>
+                                            {rev.totalRevenue
+                                                ? rev.totalRevenue.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+                                                : 'Chưa có dữ liệu'}
+                                        </td>
+
                                     </tr>
                                 ))}
                             </tbody>
@@ -176,7 +181,11 @@ const RevenueDashboard = () => {
                                 {monthlyRevenue.map((rev, index) => (
                                     <tr key={index}>
                                         <td>{selectedCinema === 'all' ? 'Tất cả phòng chiếu' : rev.theaterName}</td>
-                                        <td>{rev.totalRevenue.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>
+                                        <td>
+                                            {rev.totalRevenue
+                                                ? rev.totalRevenue.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+                                                : 'Chưa có dữ liệu'}
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -211,7 +220,11 @@ const RevenueDashboard = () => {
                                 {yearlyRevenue.map((rev, index) => (
                                     <tr key={index}>
                                         <td>{selectedCinema === 'all' ? 'Tất cả phòng chiếu' : rev.theaterName}</td>
-                                        <td>{rev.totalRevenue.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>
+                                        <td>
+                                            {rev.totalRevenue
+                                                ? rev.totalRevenue.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+                                                : 'Chưa có dữ liệu'}
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>

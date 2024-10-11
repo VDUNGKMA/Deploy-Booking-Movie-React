@@ -84,7 +84,9 @@
             "screening-room": "Phòng chiếu",
             "manag-screening-room": "Quản lý phòng chiếu",
             "validate_ticket": "Quét vé",
-            "manage-validate_ticket": "Xác thực vé"
+            "manage-validate_ticket": "Xác thực vé",
+            "search-movie": "Tìm kiếm phim",
+            "manage-seach-movie": "Quản lý tìm kiếm phim"
         }
     },
     "manage-user": {

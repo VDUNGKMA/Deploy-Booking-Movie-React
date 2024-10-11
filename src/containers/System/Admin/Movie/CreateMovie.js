@@ -242,7 +242,7 @@ class ManageMovie extends Component {
                         />
                     </div>
 
-                    <div className="col-12 form-group">
+                    <div className="col-6 form-group">
                         <label>Genres</label>
                         <Select
                             value={this.state.selectedGenres}

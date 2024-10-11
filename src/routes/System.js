@@ -15,8 +15,9 @@ import TicketList from '../containers/System/Admin/Tickets/TicketList';
 import RevenueDashboard from '../containers/System/Admin/Revenue/RevenueDashboard';
 import RevenueByMovieWeekly from '../containers/System/Admin/Revenue/RevenueByMovieWeekly';
 import RevenueByShowtime from '../containers/System/Admin/Revenue/RevenueByShowtime';
-import CinemaSelector from '../containers/Patient/Staff/CinemaSelector';
 import TicketScanner from '../containers/Patient/Staff/ScanQRCode/TicketScanner';
+import MovieSearch from '../containers/Patient/Staff/Seach-Movie/MovieSearch';
+import CinemaSelector from '../containers/Patient/Staff/ManageScreeningRoom/CinemaSelector';
 class System extends Component {
     render() {
         const { systemMenuPath, isLoggedIn } = this.props;
@@ -41,6 +42,8 @@ class System extends Component {
                             <Route path="/system/revenue-by-showtime" component={RevenueByShowtime} />
                             <Route path="/system/staff/theater" component={CinemaSelector} />
                             <Route path="/system/staff/scan-qr" component={TicketScanner} />
+                            <Route path="/system/staff/search-movie" component={MovieSearch} />
+
 
 
 

@@ -17,35 +17,63 @@ class UserManage extends Component {
             isOpenModalUser: false,
             isOpenModalEditUser: false,
             userEdit: {},
-            selectedRole: 2 // Mặc định chọn vai trò "user"
+            selectedRole: 2, // Mặc định chọn vai trò "user"
+            currentPage: 1, // Default to first page
+            totalPages: 1, // Initialize total pages
+            searchQuery: ''
         }
     }
 
     async componentDidMount() {
-        await this.getAllUserFromReact();
+        // await this.getAllUserFromReact();
+        await this.getAllUsers();
     }
 
-    getAllUserFromReact = async () => {
-        let response = await getUsersByRoleApi(this.state.selectedRole);
+    getAllUsers = async () => {
+        const { selectedRole, currentPage } = this.state;
+        let response = await getUsersByRoleApi(selectedRole, currentPage, 10, this.state.searchQuery); // Fetch 10 users per page
         if (response && response.status === "success") {
             this.setState({
-                arrUsers: response.data.users.reverse()
+                arrUsers: response.data.users.reverse(),
+                totalPages: response.data.totalPages
             });
         }
     }
-
+ 
     handleRoleChange = async (event) => {
-        const selectedRole = parseInt(event.target.value, 10);
-        this.setState({ selectedRole });
-
-        let response = await getUsersByRoleApi(selectedRole);
-        if (response && response.status === "success") {
-            this.setState({
-                arrUsers: response.data.users.reverse()
-            });
-        }
+        this.setState({
+            selectedRole: parseInt(event.target.value, 10),
+            currentPage: 1
+        }, this.getAllUsers); // Reset to first page on role change
+    }
+    handleSearchChange = (event) => {
+        this.setState({ searchQuery: event.target.value });
     }
 
+    handleSearchSubmit = () => {
+        this.getAllUsers();
+    }
+    handlePageChange = (newPage) => {
+        this.setState({ currentPage: newPage }, this.getAllUsers);
+    }
+    renderPagination = () => {
+        const { currentPage, totalPages } = this.state;
+        const pages = [];
+
+        for (let i = 1; i <= totalPages; i++) {
+            pages.push(
+                <button
+                    key={i}
+                    className={`page-button ${i === currentPage ? 'active' : ''}`}
+                    onClick={() => this.handlePageChange(i)}
+                >
+                    {i}
+                </button>
+            );
+        }
+
+        return <div className="pagination">{pages}</div>;
+    }
     handleAddNewUser = () => {
         this.setState({
             isOpenModalUser: true,
@@ -86,12 +114,12 @@ class UserManage extends Component {
             let response = await createNewUserService(formData); // Send formData
             console.log(response); // In ra để kiểm tra response
             if (response && response.status === 'success') {
-                await this.getAllUserFromReact();
+                await this.getAllUsers();
                 this.setState({ isOpenModalUser: false });
                 toast.success('Create user succeed');
                 emitter.emit('EVEN_CLEAR_MODAL_DATA');
             } else {
-                alert(response.errMessage);
+                alert(response.message);
             }
         } catch (error) {
             console.log(error);
@@ -122,7 +150,7 @@ class UserManage extends Component {
                     isOpenModalEditUser: false
                 });
                 toast.success("Update user succeed");
-                await this.getAllUserFromReact();
+                await this.getAllUsers();
             } else {
                 alert(res.errMessage);
             }
@@ -136,7 +164,7 @@ class UserManage extends Component {
             let res = await deleteUserService(data.id);
             if (res && res.status === "success") {
                 toast.success("Delete user succeed");
-                await this.getAllUserFromReact();
+                await this.getAllUsers();
             } else {
                 alert(res.errMessage);
             }
@@ -163,17 +191,30 @@ class UserManage extends Component {
                     />
                 }
                 <div className='title text-center'>Manage User</div>
-                <div className='mx-2'>
-                    <label htmlFor="roleSelect">Select Role:</label>
-                    <select
-                        id="roleSelect"
-                        value={this.state.selectedRole}
-                        onChange={this.handleRoleChange}
-                    >
-                        <option value={1}>Admin</option>
-                        <option value={2}>Staff</option>
-                        <option value={3}>User</option>
-                    </select>
+                <div className="controls-container">
+                    <div className="role-select-container">
+                        <label htmlFor="roleSelect">Select Role:</label>
+                        <select
+                            id="roleSelect"
+                            value={this.state.selectedRole}
+                            onChange={this.handleRoleChange}
+                        >
+                            <option value={1}>Admin</option>
+                            <option value={2}>Staff</option>
+                            <option value={3}>User</option>
+                        </select>
+                    </div>
+
+                    {/* Search Container */}
+                    <div className="search-container">
+                        <input
+                            type="text"
+                            placeholder="Search by username or email"
+                            value={this.state.searchQuery}
+                            onChange={this.handleSearchChange}
+                        />
+                        <button onClick={this.handleSearchSubmit}>Search</button>
+                    </div>
                 </div>
                 <div className='mx-2'>
                     <button className='btn btn-primary px-3' onClick={() => this.handleAddNewUser()}>
@@ -220,6 +261,7 @@ class UserManage extends Component {
                             ))}
                         </tbody>
                     </table>
+                    {this.renderPagination()}
                 </div>
             </div>
         );

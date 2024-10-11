@@ -64,7 +64,9 @@
             "screening-room": "Screening room",
             "manag-screening-room": "Manage screening room",
             "validate_ticket": "Scan ticket",
-            "manage-validate_ticket": "Validate Ticket"
+            "manage-validate_ticket": "Validate Ticket",
+            "search-movie": "Search movie",
+            "manage-seach-movie": "Manage Search movie"
         }
     },
     "manage-user": {

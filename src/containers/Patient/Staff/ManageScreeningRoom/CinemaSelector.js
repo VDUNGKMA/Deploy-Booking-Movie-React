@@ -1,6 +1,6 @@
 // src/components/CinemaSelector.js
 import React, { useEffect, useState } from 'react';
-import { getCinemasApi, fetchTheatersByCinema } from '../../../services/userService';
+import { getCinemasApi, fetchTheatersByCinema } from '../../../../services/userService';
 import TheaterDetails from './TheaterDetails';
 import './CinemaSelector.scss'
 const CinemaSelector = () => {

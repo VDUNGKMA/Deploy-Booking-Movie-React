@@ -8,6 +8,8 @@ const TicketScanner = () => {
     const [ticketData, setTicketData] = useState(null);
     const [error, setError] = useState(null);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
+    const [showUsedModal, setShowUsedModal] = useState(false); // Modal cho vé đã sử dụng
+    const [showExpiredModal, setShowExpiredModal] = useState(false); // Modal cho vé quá hạn
 
     const handleImageUpload = async (event) => {
         const file = event.target.files[0];
@@ -55,19 +57,35 @@ const TicketScanner = () => {
         }
     };
 
+   
     const handleTicketValidation = async () => {
         try {
             const response = await axios.patch(`/api/staff/ticket/validate/${ticketData.ticketId}`);
+
+            // Hiển thị modal xác thực thành công
             setShowSuccessModal(true);
-            setTicketData(null); // Reset lại sau khi xác thực
+            setTicketData(null); // Xóa thông tin vé sau khi xác thực
+
         } catch (err) {
             console.error("Lỗi khi xác thực vé:", err);
-            setError("Xác thực vé thất bại.");
+
+            // Kiểm tra và hiển thị thông báo cụ thể
+            const errorMessage = err.response?.data?.message;
+
+            if (errorMessage === "This ticket has already been used") {
+                setShowUsedModal(true);
+            } else if (errorMessage === "This ticket is expired") {
+                setShowExpiredModal(true);
+            } else {
+                setError("Xác thực vé thất bại.");
+            }
         }
     };
 
     const closeModal = () => {
         setShowSuccessModal(false);
+        setShowUsedModal(false);
+        setShowExpiredModal(false);
     };
 
     return (
@@ -86,19 +104,50 @@ const TicketScanner = () => {
                     <p><strong>Rạp:</strong> {ticketData.cinema}</p>
                     <p><strong>Phòng chiếu:</strong> {ticketData.theater}</p>
                     <p><strong>Ghế:</strong> {ticketData.seats}</p>
-                    <p><strong>Giá vé:</strong> {ticketData.price} VND</p>
+                    {/* <p><strong>Giá vé:</strong> {ticketData.price} VND</p> */}
+                    <p>
+                        <strong>Giá vé:</strong>
+                        {new Intl.NumberFormat('vi-VN',
+                            { style: 'currency', currency: 'VND' }
+                        ).format(ticketData.price)}
+                    </p>
+
                     <p><strong>Thời gian chiếu phim:</strong> {moment(ticketData.startTime).format('DD/MM/YYYY HH:mm:ss')}</p>
+                    <p><strong>Thời gian kết thúc phim:</strong> {moment(ticketData.endTime).format('DD/MM/YYYY HH:mm:ss')}</p>
 
 
                     <button onClick={handleTicketValidation} className="validate-button">Xác thực vé</button>
                 </div>
             )}
 
+            {/* Modal cho xác thực thành công */}
             {showSuccessModal && (
                 <div className="modal">
                     <div className="modal-content">
                         <h3>Xác thực thành công!</h3>
                         <p>Vé đã được xác thực thành công.</p>
+                        <button onClick={closeModal} className="close-modal-button">Đóng</button>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal cho vé đã sử dụng */}
+            {showUsedModal && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h3>Vé đã được sử dụng!</h3>
+                        <p>Vé này đã được sử dụng trước đó.</p>
+                        <button onClick={closeModal} className="close-modal-button">Đóng</button>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal cho vé quá hạn */}
+            {showExpiredModal && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h3>Vé đã hết hạn!</h3>
+                        <p>Vé này không còn hợp lệ do quá hạn sử dụng.</p>
                         <button onClick={closeModal} className="close-modal-button">Đóng</button>
                     </div>
                 </div>

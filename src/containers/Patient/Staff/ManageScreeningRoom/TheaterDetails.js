@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { fetchShowtimesByTheater, fetchSeatsByShowtime, fetchTheaterStatus } from '../../../services/userService';
-import './TheaterDetails.scss'; // Import file SCSS cho giao diện
+import { fetchShowtimesByTheater, fetchSeatsByShowtime, fetchTheaterStatus } from '../../../../services/userService';
+import './TheaterDetails.scss';
 
 const TheaterDetails = ({ theater }) => {
     const [showtimes, setShowtimes] = useState([]);
@@ -47,8 +47,14 @@ const TheaterDetails = ({ theater }) => {
                 >
                     <option value="">-- Chọn suất chiếu --</option>
                     {showtimes.map((showtime) => (
-                        <option key={showtime.id} value={showtime.id}>
+                        <option
+                            key={showtime.id}
+                            value={showtime.id}
+                            className={showtime.isFinished ? 'finished-showtime' : ''}
+                        >
+                            {showtime.movieTitle} |
                             {new Date(showtime.start_time).toLocaleTimeString()} - {new Date(showtime.end_time).toLocaleTimeString()}
+                            {showtime.isFinished ? ' (Đã kết thúc)' : ''}
                         </option>
                     ))}
                 </select>
@@ -58,7 +64,6 @@ const TheaterDetails = ({ theater }) => {
                 <div className="theater-details__seats">
                     <h4>Sơ đồ ghế:</h4>
                     <div className="seat-map-preview" onClick={toggleSeatMapModal}>
-                        {/* Hiển thị sơ đồ ghế nhỏ, nhấp vào để mở modal */}
                         {seats.map((seat) => (
                             <div
                                 key={seat.seatId}
@@ -79,7 +84,6 @@ const TheaterDetails = ({ theater }) => {
                 </div>
             )}
 
-            {/* Modal hiển thị sơ đồ ghế */}
             {isSeatMapModalOpen && (
                 <div className="seat-map-modal">
                     <div className="seat-map-modal__content">

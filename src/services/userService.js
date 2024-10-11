@@ -28,11 +28,29 @@ const getAllUsers = () => {
           return Promise.reject('No token found'); // Xử lý khi không có token
      }
 }
-const getUsersByRoleApi = (roleId) => {
+// const getUsersByRoleApi = (roleId) => {
+//      const token = localStorage.getItem('token'); // Lấy token từ localStorage
+//      if (token) {
+//           return axios.get('/api/admin/users-by-role', {
+//                params: { role_id: roleId }, // Truyền role_id qua query params
+//                headers: {
+//                     Authorization: `Bearer ${token}` // Đính kèm token vào header Authorization
+//                }
+//           });
+//      } else {
+//           return Promise.reject('No token found'); // Xử lý khi không có token
+//      }
+// };
+const getUsersByRoleApi = (roleId, page = 1, limit = 10, search = '') => {
      const token = localStorage.getItem('token'); // Lấy token từ localStorage
      if (token) {
           return axios.get('/api/admin/users-by-role', {
-               params: { role_id: roleId }, // Truyền role_id qua query params
+               params: { 
+                    role_id: roleId,
+                    page, // Current page number
+                    limit,
+                    search
+                }, // Truyền role_id qua query params
                headers: {
                     Authorization: `Bearer ${token}` // Đính kèm token vào header Authorization
                }
@@ -41,7 +59,6 @@ const getUsersByRoleApi = (roleId) => {
           return Promise.reject('No token found'); // Xử lý khi không có token
      }
 };
-
 const createNewUserService = (formData) => {
      const token = localStorage.getItem('token'); // Lấy token từ localStorage
      if (token) {

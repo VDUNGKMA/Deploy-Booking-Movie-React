@@ -106,6 +106,16 @@ export const doctorMenu = [
             },
         ]
     },
+    { //Quản lý suất chiếu
+        name: 'menu.staff.search-movie',
+        menus: [
+            {
+                name: 'menu.staff.manage-seach-movie', link: '/system/staff/search-movie'
+
+            },
+        ]
+    },
+
 
 
 
