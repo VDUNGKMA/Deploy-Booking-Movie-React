@@ -25,7 +25,7 @@ import DetailClinic from './Patient/Clinic/DetailClinic.js';
 import ForgotPassword from './Auth/ForgotPassword.js';
 import ResetPassword from './Auth/ResetPassword.js';
 import SendOTP from './Auth/SendOTP.js';
-
+import { GoogleOAuthProvider } from '@react-oauth/google';
 class App extends Component {
 
     handlePersistorState = () => {
@@ -49,58 +49,60 @@ class App extends Component {
     render() {
         return (
             <Fragment>
-                <Router history={history}>
-                    <div className="main-container">
+                <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+                    <Router history={history}>
+                        <div className="main-container">
 
 
-                        <div className="content-container">
-                            <CustomScrollbars style={{ width: '100%', height: '100vh' }}>
-                                <Switch>
-                                    <Route path={path.HOME} exact component={(Home)} />
-                                    <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)} />
-                                    <Route path={path.FORGOTPASSWORD} exact component={ForgotPassword} />
-                                    <Route path={path.SENDOTP} exact component={SendOTP} />
+                            <div className="content-container">
+                                <CustomScrollbars style={{ width: '100%', height: '100vh' }}>
+                                    <Switch>
+                                        <Route path={path.HOME} exact component={(Home)} />
+                                        <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)} />
+                                        <Route path={path.FORGOTPASSWORD} exact component={ForgotPassword} />
+                                        <Route path={path.SENDOTP} exact component={SendOTP} />
 
-                                    <Route path={path.RESET_PASSWOWRD} component={ResetPassword} />
-                                    <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
-                                    <Route path={'/doctor'} component={userIsAuthenticated(Doctor)} />
+                                        <Route path={path.RESET_PASSWOWRD} component={ResetPassword} />
+                                        <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
+                                        <Route path={'/doctor'} component={userIsAuthenticated(Doctor)} />
 
-                                    <Route path={path.HOMEPAGE} component={HomePage} />
-                                    <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
-                                    <Route path={path.DETAIL_SPECIALTY} component={DetailSpecialty} />
-                                    <Route path={path.DETAIL_CLINIC} component={DetailClinic} />
-
-
-                                    <Route path={path.VERIFY_EMAIL_BOOKING} component={VerifyEmail} />
+                                        <Route path={path.HOMEPAGE} component={HomePage} />
+                                        <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
+                                        <Route path={path.DETAIL_SPECIALTY} component={DetailSpecialty} />
+                                        <Route path={path.DETAIL_CLINIC} component={DetailClinic} />
 
 
+                                        <Route path={path.VERIFY_EMAIL_BOOKING} component={VerifyEmail} />
 
-                                </Switch>
-                            </CustomScrollbars>
-                        </div>
 
-                        {/* <ToastContainer
+
+                                    </Switch>
+                                </CustomScrollbars>
+                            </div>
+
+                            {/* <ToastContainer
                             className="toast-container" toastClassName="toast-item" bodyClassName="toast-item-body"
                             autoClose={false} hideProgressBar={true} pauseOnHover={false}
                             pauseOnFocusLoss={true} closeOnClick={false} draggable={false}
                             closeButton={<CustomToastCloseButton />}
                         /> */}
-                        <ToastContainer
-                            position="top-right"
-                            autoClose={5000}
-                            hideProgressBar={false}
-                            newestOnTop={false}
-                            closeOnClick
-                            rtl={false}
-                            pauseOnFocusLoss
-                            draggable
-                            pauseOnHover
-                            theme="light"
-                        />
-                        {/* Same as */}
-                        <ToastContainer />
-                    </div>
-                </Router>
+                            <ToastContainer
+                                position="top-right"
+                                autoClose={5000}
+                                hideProgressBar={false}
+                                newestOnTop={false}
+                                closeOnClick
+                                rtl={false}
+                                pauseOnFocusLoss
+                                draggable
+                                pauseOnHover
+                                theme="light"
+                            />
+                            {/* Same as */}
+                            <ToastContainer />
+                        </div>
+                    </Router>
+                </GoogleOAuthProvider>
             </Fragment>
         )
     }

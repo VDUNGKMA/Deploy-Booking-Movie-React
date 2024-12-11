@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { getAllGenresApi, deleteGenreApi } from '../../../services/userService'; // Import deleteGenreApi
+import { getAllGenresApi, deleteGenreApi } from '../../../services/userService';
 import { toast } from 'react-toastify';
 import './ManageGenre.scss';
-import EditGenreModal from './EditGenreModal'; // Import modal component
+import EditGenreModal from './EditGenreModal';
 
 class GenresList extends Component {
     constructor(props) {
@@ -23,10 +23,10 @@ class GenresList extends Component {
                     genres: response.data,
                 });
             } else {
-                toast.error('Failed to fetch genres');
+                toast.error('Không thể tải danh sách thể loại');
             }
         } catch (error) {
-            toast.error(error.message || 'An error occurred');
+            toast.error(error.message || 'Đã xảy ra lỗi');
         }
     }
 
@@ -34,32 +34,31 @@ class GenresList extends Component {
         this.setState({
             isModalOpen: true,
             selectedGenre: genre,
-            isNewGenre: false, // Not a new genre, it's editing
+            isNewGenre: false,
         });
     }
 
     handleAddNewGenre = () => {
         this.setState({
             isModalOpen: true,
-            selectedGenre: { genre_name: '' }, // Set an empty genre object for the modal
-            isNewGenre: true, // Indicate that this is for adding a new genre
+            selectedGenre: { genre_name: '' },
+            isNewGenre: true,
         });
     }
 
     handleDeleteGenre = async (genreId) => {
         try {
-            const response = await deleteGenreApi(genreId); // Call the delete API
+            const response = await deleteGenreApi(genreId);
             if (response.status !== 404) {
-                // Remove the deleted genre from state
                 this.setState({
                     genres: this.state.genres.filter((genre) => genre.id !== genreId),
                 });
-                toast.success('Deleted genre success');
+                toast.success('Xóa thể loại thành công');
             } else {
-                toast.error('Failed to delete genre');
+                toast.error('Xóa thể loại thất bại');
             }
         } catch (error) {
-            toast.error('Error deleting genre: ' + error.message);
+            toast.error('Lỗi khi xóa thể loại: ' + error.message);
         }
     };
 
@@ -71,10 +70,10 @@ class GenresList extends Component {
         if (this.state.isNewGenre) {
             // Adding a new genre
             this.setState({
-                genres: [...this.state.genres, updatedGenre], // Add the new genre to the list
+                genres: [...this.state.genres, updatedGenre],
                 isModalOpen: false,
             });
-            toast.success('Genre added successfully!');
+            toast.success('Thêm thể loại thành công!');
         } else {
             // Editing an existing genre
             const updatedGenres = this.state.genres.map((genre) =>
@@ -84,7 +83,7 @@ class GenresList extends Component {
                 genres: updatedGenres,
                 isModalOpen: false,
             });
-            toast.success('Genre updated successfully!');
+            toast.success('Cập nhật thể loại thành công!');
         }
     }
 
@@ -95,16 +94,16 @@ class GenresList extends Component {
             <div className="genres-list-container">
                 <div className="title">
                     <button className="btn btn-success add-genre-btn" onClick={this.handleAddNewGenre}>
-                        Add New Genre
+                        Thêm Thể Loại Mới
                     </button>
-                    <h2>Danh sách thể loại phim mới nhất</h2>
+                    <h2>Danh Sách Thể Loại Phim</h2>
                 </div>
                 <table className="table-genres">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Tên Thể Loại</th>
-                            <th>Actions</th>
+                            <th>Hành Động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -136,7 +135,7 @@ class GenresList extends Component {
                         genre={selectedGenre}
                         onClose={this.handleCloseModal}
                         onSave={this.handleSaveGenre}
-                        isNewGenre={this.state.isNewGenre} // Pass to modal if it's a new genre
+                        isNewGenre={this.state.isNewGenre}
                     />
                 )}
             </div>

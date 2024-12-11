@@ -22,6 +22,7 @@ import {
     Label,
     Input,
     Table,
+    Spinner,
 } from 'reactstrap';
 // import ManageSeatModal from './ManageSeatModal';
 import { toast } from 'react-toastify';
@@ -38,6 +39,7 @@ class ManageCinema extends Component {
             selectedCinema: null,
             previewImage: '',
             imageFile: null,
+            loading: false,
             // Theater Management
             isManageTheatersModalOpen: false, // State riêng cho Manage Theaters Modal
             isAddEditTheaterModalOpen: false, // State riêng cho Add/Edit Theater Modal
@@ -185,7 +187,7 @@ class ManageCinema extends Component {
         if (imageFile) {
             formData.append('image', imageFile);
         }
-
+        this.setState({ loading: true }); // Start loading
         try {
             let response;
             if (isEditCinemaMode) {
@@ -203,6 +205,8 @@ class ManageCinema extends Component {
             }
         } catch (error) {
             toast.error('Lỗi khi gọi API');
+        } finally {
+            this.setState({ loading: false }); // Stop loading
         }
     };
 
@@ -314,7 +318,7 @@ class ManageCinema extends Component {
             toast.error('Vui lòng nhập đầy đủ thông tin phòng chiếu');
             return;
         }
-
+        this.setState({ loading: true }); // Start loading
         try {
             let response;
             if (isEditTheaterMode) {
@@ -339,6 +343,8 @@ class ManageCinema extends Component {
             }
         } catch (error) {
             toast.error('Lỗi khi gọi API');
+        } finally {
+            this.setState({ loading: false }); // Stop loading
         }
     };
 
@@ -379,6 +385,7 @@ class ManageCinema extends Component {
             // Seat Management
             isManageSeatsModalOpen,
             selectedTheaterForSeats,
+            loading, 
         } = this.state;
 
         return (
@@ -471,8 +478,29 @@ class ManageCinema extends Component {
                                 <Label for="image">Hình ảnh</Label>
                                 <Input type="file" id="image" onChange={this.handleCinemaImageChange} />
                                 {previewImage && (
-                                    <div className="preview-image">
-                                        <img src={previewImage} alt="Preview"/>
+                                    <div
+                                        style={{
+                                            marginTop: '10px',
+                                            width: '120px',         // Fixed frame width
+                                            height: '80px',         // Fixed frame height
+                                            border: '1px solid #ddd',
+                                            borderRadius: '5px',
+                                            overflow: 'hidden',     // Ensures image doesn't exceed the frame
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            backgroundColor: '#f8f9fa'
+                                        }}
+                                    >
+                                        <img
+                                            src={previewImage}
+                                            alt="Preview"
+                                            style={{
+                                                maxWidth: '100%',    // Prevents image from exceeding container width
+                                                maxHeight: '100%',   // Prevents image from exceeding container height
+                                                objectFit: 'cover'   // Crops and centers the image within the frame
+                                            }}
+                                        />
                                     </div>
                                 )}
                             </FormGroup>
@@ -480,8 +508,14 @@ class ManageCinema extends Component {
                     </ModalBody>
                     <ModalFooter>
                         <Button color="secondary" onClick={this.closeCinemaModal}>Hủy</Button>
-                        <Button color="primary" onClick={this.handleCinemaSubmit}>
-                            {isEditCinemaMode ? 'Cập nhật' : 'Thêm mới'}
+                        <Button color="primary" onClick={this.handleCinemaSubmit} disabled={loading}>
+                            {loading ? (
+                                <>
+                                    <Spinner size="sm" color="light" /> Đang tải...
+                                </>
+                            ) : (
+                                isEditCinemaMode ? 'Cập nhật' : 'Thêm mới'
+                            )}
                         </Button>
                     </ModalFooter>
                 </Modal>
@@ -567,8 +601,15 @@ class ManageCinema extends Component {
                         </ModalBody>
                         <ModalFooter>
                             <Button color="secondary" onClick={this.closeAddEditTheaterModal}>Hủy</Button>
-                            <Button color="primary" onClick={this.handleTheaterSubmit}>
-                                {isEditTheaterMode ? 'Cập nhật' : 'Thêm mới'}
+                            <Button color="primary" onClick={this.handleTheaterSubmit} disabled={loading}>
+                            
+                                {loading ? (
+                                    <>
+                                        <Spinner size="sm" color="light" /> Đang tải...
+                                    </>
+                                ) : (
+                                        isEditTheaterMode? 'Cập nhật': 'Thêm mới' 
+                                )}
                             </Button>
                         </ModalFooter>
                     </Modal>

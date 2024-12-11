@@ -6,6 +6,16 @@ const handleLoginApi = (email, password) => {
 
      return axios.post('/api/auth/login', { email, password })
 }
+const handleGoogleLoginApi = async (googleToken) => {
+     try {
+          const response = await axios.post(`/api/auth/google-login`, {
+               token: googleToken
+          });
+          return response.data;
+     } catch (error) {
+          throw error.response ? error.response.data : new Error('Network error');
+     }
+};
 const handleForgotPasswordApi = (email) => {
      return axios.post('/api/auth/forgotPassword', { email })
 }
@@ -147,10 +157,17 @@ const deleteMovieApi = (movieId) => {
      }
 };
 
-// Gọi API để lấy tất cả các phim
-export const getAllMoviesApi = () => {
-     return axios.get('api/admin/movies');
-}
+// Gọi API để lấy tất cả các phim với phân trang và tìm kiếm
+export const getAllMoviesApi = (page = 1, limit = 10, search = '') => {
+     return axios.get('api/admin/movies', {
+          params: {
+               page,       // Số trang hiện tại
+               limit,      // Số phim trên mỗi trang
+               search      // Từ khóa tìm kiếm
+          }
+     });
+};
+
 const getAllGenresApi = () => {
 
      return axios.get('/api/admin/genres', {});
@@ -667,6 +684,7 @@ const fetchShowtimesByTheater = async (theaterId, date) => {
 };
 export {
      handleLoginApi,
+     handleGoogleLoginApi,
      handleForgotPasswordApi,
      handleVerifyOtpApi,
      handleResetPasswordApi,

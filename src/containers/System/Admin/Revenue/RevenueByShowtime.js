@@ -10,7 +10,7 @@ const RevenueByShowtime = () => {
 
     const fetchShowtimeRevenue = async () => {
         if (!startDate || !endDate) {
-            alert('Please select both start and end dates!');
+            alert('Vui lòng chọn cả ngày bắt đầu và ngày kết thúc!');
             return;
         }
 
@@ -40,7 +40,7 @@ const RevenueByShowtime = () => {
                 ],
             });
         } catch (error) {
-            console.error('Error fetching showtime revenue:', error);
+            console.error('Lỗi khi lấy dữ liệu doanh thu theo suất chiếu:', error);
         }
     };
 
@@ -50,12 +50,12 @@ const RevenueByShowtime = () => {
 
     return (
         <div className="revenue-dashboard">
-            <h1>Revenue by Showtime</h1>
+            <h1>Doanh Thu Theo Suất Chiếu</h1>
 
             {/* Phần chọn khoảng thời gian */}
             <div className="date-picker-container">
                 <div className="date-picker">
-                    <label htmlFor="startDate">Start Date:</label>
+                    <label htmlFor="startDate">Ngày Bắt Đầu:</label>
                     <input
                         type="date"
                         id="startDate"
@@ -64,7 +64,7 @@ const RevenueByShowtime = () => {
                     />
                 </div>
                 <div className="date-picker">
-                    <label htmlFor="endDate">End Date:</label>
+                    <label htmlFor="endDate">Ngày Kết Thúc:</label>
                     <input
                         type="date"
                         id="endDate"
@@ -72,7 +72,7 @@ const RevenueByShowtime = () => {
                         onChange={(e) => setEndDate(e.target.value)}
                     />
                 </div>
-                <button className="btn" onClick={fetchShowtimeRevenue}>Refresh Data</button>
+                <button className="btn" onClick={fetchShowtimeRevenue}>Làm Mới Dữ Liệu</button>
             </div>
 
             {/* Biểu đồ doanh thu theo suất chiếu */}
@@ -103,17 +103,17 @@ const RevenueByShowtime = () => {
             <table className="revenue-table">
                 <thead>
                     <tr>
-                        <th>Start Time</th>
-                        <th>End Time</th>
-                        <th>Total Revenue</th>
+                        <th>Thời Gian Bắt Đầu</th>
+                        <th>Thời Gian Kết Thúc</th>
+                        <th>Tổng Doanh Thu</th>
                     </tr>
                 </thead>
                 <tbody>
                     {showtimeRevenueData.labels &&
                         showtimeRevenueData.labels.map((label, index) => (
                             <tr key={index}>
-                                <td>{label}</td>
-                                <td>{label}</td>
+                                <td>{label.split(' - ')[0]}</td> {/* Thời gian bắt đầu */}
+                                <td>{label.split(' - ')[1]}</td> {/* Thời gian kết thúc */}
                                 <td>{parseFloat(showtimeRevenueData.datasets[0].data[index]).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>
                             </tr>
                         ))}

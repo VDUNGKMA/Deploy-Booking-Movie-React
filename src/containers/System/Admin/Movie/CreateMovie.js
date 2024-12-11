@@ -5,11 +5,12 @@ import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 import { toast } from 'react-toastify';
-import { createMovieApi, getAllGenresApi } from '../../../../services/userService'; // Import the movie API service
+import { createMovieApi, getAllGenresApi } from '../../../../services/userService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye } from '@fortawesome/free-solid-svg-icons'; // Eye icon from FontAwesome
+import { faEye } from '@fortawesome/free-solid-svg-icons';
 import Select from 'react-select';
-const mdParser = new MarkdownIt(/* Markdown-it options */);
+
+const mdParser = new MarkdownIt();
 
 class ManageMovie extends Component {
     constructor(props) {
@@ -21,39 +22,35 @@ class ManageMovie extends Component {
             duration: '',
             director: '',
             rating: '',
-            poster: null, // Store file for image
-            trailer: null, // Store file for video
+            poster: null,
+            trailer: null,
             descriptionHTML: '',
             descriptionMarkdown: '',
-            showModal: false, // Controls modal visibility
-            isLoading: false, // State để kiểm soát trạng thái loading
-            genres: [], // Danh sách các thể loại từ API
-            selectedGenres: [], // Các thể loại được chọn
+            showModal: false,
+            isLoading: false,
+            genres: [],
+            selectedGenres: [],
         };
     }
 
-    // Lấy danh sách thể loại khi component được mount
     async componentDidMount() {
         try {
             let res = await getAllGenresApi();
-            console.log("check genres api:", res)
             if (res && res.status === 'success') {
-                // Chuyển đổi dữ liệu thành định dạng phù hợp cho react-select
                 const genres = res.data.map((genre) => ({
                     value: genre.id,
                     label: genre.genre_name,
                 }));
                 this.setState({ genres });
             } else {
-                toast.error('Failed to fetch genres.');
+                toast.error('Không thể tải danh sách thể loại.');
             }
         } catch (error) {
             console.log(error);
-            toast.error('Error while fetching genres.');
+            toast.error('Lỗi khi tải danh sách thể loại.');
         }
     }
 
-    // Handle markdown editor change
     handleEditorChange = ({ html, text }) => {
         this.setState({
             descriptionMarkdown: text,
@@ -61,27 +58,24 @@ class ManageMovie extends Component {
         });
     };
 
-    // Handle image file change
     handleOnchangeImage = (event) => {
         let file = event.target.files[0];
         if (file) {
             this.setState({
-                poster: file, // Store the file object
+                poster: file,
             });
         }
     };
 
-    // Handle video file change
     handleOnchangeVideo = (event) => {
         let file = event.target.files[0];
         if (file) {
             this.setState({
-                trailer: file, // Store the file object
+                trailer: file,
             });
         }
     };
 
-    // Handle input change for form fields
     handleOnchangeInput = (event, id) => {
         let stateCopy = { ...this.state };
         stateCopy[id] = event.target.value;
@@ -90,19 +84,16 @@ class ManageMovie extends Component {
         });
     };
 
-    // Handle select change
     handleChangeSelect = (selectedGenres) => {
         this.setState({ selectedGenres });
     };
 
-    // Toggle modal for viewing image
     toggleModal = () => {
         this.setState({
             showModal: !this.state.showModal,
         });
     };
 
-    // Handle save new movie
     handleSaveNewMovie = async () => {
         const {
             title,
@@ -111,12 +102,11 @@ class ManageMovie extends Component {
             duration,
             director,
             rating,
-            poster, // Holds image file
-            trailer, // Holds video file
+            poster,
+            trailer,
             selectedGenres,
         } = this.state;
 
-        // Kiểm tra nếu bất kỳ trường nào trống
         if (
             !title ||
             !descriptionHTML ||
@@ -126,16 +116,14 @@ class ManageMovie extends Component {
             !rating ||
             !poster ||
             !trailer ||
-            selectedGenres.length === 0 // Kiểm tra xem có chọn ít nhất một thể loại hay không
+            selectedGenres.length === 0
         ) {
-            toast.error('All fields are required. Please fill out all the fields.');
-            return; // Dừng lại nếu có trường nào trống
+            toast.error('Vui lòng điền đầy đủ thông tin.');
+            return;
         }
 
-        // Bật trạng thái loading
         this.setState({ isLoading: true });
 
-        // Lấy danh sách các ID thể loại đã chọn
         const genreIds = selectedGenres.map((genre) => genre.value);
 
         const formData = new FormData();
@@ -145,17 +133,14 @@ class ManageMovie extends Component {
         formData.append('duration', Number(duration));
         formData.append('director', director);
         formData.append('rating', Number(rating));
-        formData.append('poster', poster); // Append image file
-        formData.append('trailer', trailer); // Append video file
-        formData.append('genres', JSON.stringify(genreIds)); // Gửi danh sách thể loại dưới dạng chuỗi JSON
-        for (let pair of formData.entries()) {
-            console.log(`${pair[0]}, ${pair[1]}`);
-        }
+        formData.append('poster', poster);
+        formData.append('trailer', trailer);
+        formData.append('genres', JSON.stringify(genreIds));
 
         try {
-            let res = await createMovieApi(formData); // Call the API
+            let res = await createMovieApi(formData);
             if (res && res.status === 'success') {
-                toast.success('New movie added successfully!');
+                toast.success('Phim mới đã được thêm thành công!');
                 this.setState({
                     title: '',
                     description: '',
@@ -168,16 +153,16 @@ class ManageMovie extends Component {
                     descriptionHTML: '',
                     descriptionMarkdown: '',
                     selectedGenres: [],
-                    isLoading: false, // Tắt loading khi hoàn thành
+                    isLoading: false,
                 });
             } else {
-                toast.error('Something went wrong. Please try again.');
-                this.setState({ isLoading: false }); // Tắt loading khi gặp lỗi
+                toast.error('Có lỗi xảy ra. Vui lòng thử lại.');
+                this.setState({ isLoading: false });
             }
         } catch (error) {
             console.log(error);
-            toast.error('Error while adding movie.');
-            this.setState({ isLoading: false }); // Tắt loading khi gặp lỗi
+            toast.error('Lỗi khi thêm phim.');
+            this.setState({ isLoading: false });
         }
     };
 
@@ -186,11 +171,11 @@ class ManageMovie extends Component {
 
         return (
             <div className="manage-movie-container">
-                <div className="mm-title">Manage Movies</div>
+                <div className="mm-title">Quản Lý Phim</div>
 
                 <div className="add-new-movie row">
                     <div className="col-6 form-group">
-                        <label>Movie Title</label>
+                        <label>Tên Phim</label>
                         <input
                             className="form-control"
                             type="text"
@@ -200,7 +185,7 @@ class ManageMovie extends Component {
                     </div>
 
                     <div className="col-6 form-group">
-                        <label>Director</label>
+                        <label>Đạo Diễn</label>
                         <input
                             className="form-control"
                             type="text"
@@ -210,7 +195,7 @@ class ManageMovie extends Component {
                     </div>
 
                     <div className="col-6 form-group">
-                        <label>Release Date</label>
+                        <label>Ngày Phát Hành</label>
                         <input
                             className="form-control"
                             type="date"
@@ -220,7 +205,7 @@ class ManageMovie extends Component {
                     </div>
 
                     <div className="col-6 form-group">
-                        <label>Duration (in minutes)</label>
+                        <label>Thời Lượng (phút)</label>
                         <input
                             className="form-control"
                             type="number"
@@ -231,7 +216,7 @@ class ManageMovie extends Component {
                     </div>
 
                     <div className="col-6 form-group">
-                        <label>Rating</label>
+                        <label>Xếp Hạng</label>
                         <input
                             className="form-control"
                             type="number"
@@ -243,18 +228,18 @@ class ManageMovie extends Component {
                     </div>
 
                     <div className="col-6 form-group">
-                        <label>Genres</label>
+                        <label>Thể Loại</label>
                         <Select
                             value={this.state.selectedGenres}
                             onChange={this.handleChangeSelect}
                             options={this.state.genres}
                             isMulti={true}
-                            placeholder="Select genres..."
+                            placeholder="Chọn thể loại..."
                         />
                     </div>
 
                     <div className="col-6 form-group">
-                        <label>Movie Poster</label>
+                        <label>Ảnh Bìa Phim</label>
                         <input
                             className="form-control"
                             type="file"
@@ -273,7 +258,7 @@ class ManageMovie extends Component {
                     </div>
 
                     <div className="col-6 form-group">
-                        <label>Trailer Video</label>
+                        <label>Trailer</label>
                         <input
                             className="form-control"
                             type="file"
@@ -287,26 +272,23 @@ class ManageMovie extends Component {
                         )}
                     </div>
 
-                    <div className="col-12 ">
-                        <label>
-                            <b>Description</b>
-                        </label>
+                    <div className="col-12 form-group">
+                        <label>Mô Tả</label>
                         <MdEditor
                             value={this.state.descriptionMarkdown}
                             style={{ height: '300px' }}
                             renderHTML={(text) => mdParser.render(text)}
                             onChange={this.handleEditorChange}
                         />
-
                     </div>
 
                     <div className="col-12">
                         <button
                             className="btn-save-movie"
                             onClick={this.handleSaveNewMovie}
-                            disabled={isLoading} // Disable button khi đang loading
+                            disabled={isLoading}
                         >
-                            {isLoading ? 'Saving...' : 'Save Movie'}
+                            {isLoading ? 'Đang Lưu...' : 'Lưu Phim'}
                         </button>
                     </div>
                 </div>

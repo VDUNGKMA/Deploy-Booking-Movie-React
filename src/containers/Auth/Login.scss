@@ -33,6 +33,7 @@
 
             .form-group {
                 margin-bottom: 1.5rem;
+                position: relative; /* Đặt form-group là relative */
 
                 label {
                     display: block;
@@ -43,7 +44,7 @@
 
                 input {
                     width: 100%;
-                    padding: 0.7em;
+                    padding: 0.7em 2.5em 0.7em 0.7em; /* Tạo không gian bên phải cho biểu tượng mắt */
                     border: 1px solid #ccc;
                     border-radius: 5px;
                     font-size: 16px;
@@ -53,21 +54,18 @@
                         border-color: #5a77e8;
                         outline: none;
                     }
-
-
                 }
 
+                /* Căn chỉnh biểu tượng "mắt" sang bên phải và xuống dưới một chút */
                 span {
-                  
-                        content: "\f06e";
-                        position: relative;
-                        margin-left: 256px;
-                        top: -46px;
-                        cursor: pointer;
+                    position: absolute;
+                    top: 55%; /* Đẩy xuống một chút */
+                    right: 10px;
+                    transform: translateY(-50%) translateY(10px); /* Đẩy xuống thêm */
+                    cursor: pointer;
+                    font-size: 18px;
+                    color: #555;
                 }
-
-
-
             }
 
             button {
@@ -79,52 +77,60 @@
                 cursor: pointer;
                 font-size: 16px;
                 transition: background-color 0.3s ease;
-                width: 344px;
+                width: 100%;
 
                 &:hover {
                     background-color: #3a4ca2;
                 }
             }
 
-            span {
+            .forgot-password-link {
                 color: #666;
                 font-size: 14px;
                 text-align: center;
                 display: block;
                 margin-top: 1rem;
-                margin-left: 197px;
+                cursor: pointer;
+
                 &:hover {
-                    color:#2000a2;
-                    cursor: pointer;
-                    background-color: yellow;
+                    color: #2000a2;
+                    background-color: #f0f0f0;
                 }
-                
             }
 
             .social-login {
-                .fa-facebook:before {
-                    content: "\f09a";
-                    font-size: 37px;
-                    background: white;
-                    color: dodgerblue;
-                    margin-left: 129px;
-                    margin-right: 11px;
+                display: flex;
+                justify-content: center;
+                gap: 15px;
+                margin-top: 1.5rem;
+
+                .btn-facebook, .btn-google {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 45px;
+                    height: 45px;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    transition: transform 0.3s ease;
+
+                    &:hover {
+                        transform: scale(1.1);
+                    }
                 }
 
-                .fa-google-plus:before {
-                    content: "\f2b3";
-                    font-size: 37px;
-                    background: red;
-                    color: white;
-                    border-radius: 134px;
-                    margin-right: 5px;
+                .btn-facebook {
+                    background: #3b5998;
+                    color: #fff;
+                    font-size: 24px;
                 }
 
-
+                .btn-google {
+                    background: #db4437;
+                    color: #fff;
+                    font-size: 24px;
+                }
             }
-
         }
-
-
     }
 }

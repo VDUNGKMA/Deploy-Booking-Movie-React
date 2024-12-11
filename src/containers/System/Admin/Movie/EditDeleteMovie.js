@@ -13,93 +13,103 @@ class ManageMovie extends Component {
             genres: [],
             isEditModalOpen: false,
             selectedMovie: null,
-            previewPoster: '', // Lưu trữ URL ảnh xem trước
-            previewTrailer: '', // Lưu trữ URL video xem trước
-            isLoading: false
+            previewPoster: '',
+            previewTrailer: '',
+            isLoading: false,
+            currentPage: 1,
+            totalPages: 1,
+            moviesPerPage: 5,
+            searchQuery: '' // Track the search input
         };
     }
 
-    // Lấy danh sách phim khi component được mount
+    // Fetch movies and genres when component mounts
     async componentDidMount() {
+        await this.fetchMovies();
+        await this.fetchGenres();
+    }
+
+    // Fetch movies based on current page and search query
+    fetchMovies = async () => {
+        const { currentPage, moviesPerPage, searchQuery } = this.state;
         try {
-            let response = await getAllMoviesApi();
-            console.log("check res getallapi", response)
+            const response = await getAllMoviesApi(currentPage, moviesPerPage, searchQuery);
             if (response && response.data) {
                 this.setState({
-                    movies: response.data.movies.reverse(),
-                });
-            }
-            // Lấy danh sách thể loại
-            let genreResponse = await getAllGenresApi(); // Hàm này bạn cần định nghĩa trong userService
-            if (genreResponse && genreResponse.data) {
-                this.setState({
-                    genres: genreResponse.data,
+                    movies: response.data.movies,
+                    totalPages: response.data.totalPages
                 });
             }
         } catch (error) {
-            toast.error('Lỗi khi lấy dữ liệu');
+            toast.error('Lỗi khi lấy dữ liệu phim.');
         }
-    }
+    };
+
+    // Fetch genres
+    fetchGenres = async () => {
+        try {
+            const response = await getAllGenresApi();
+            if (response && response.data) {
+                this.setState({
+                    genres: response.data
+                });
+            }
+        } catch (error) {
+            toast.error('Lỗi khi lấy danh sách thể loại.');
+        }
+    };
+
+    // Create genre options for react-select
     getGenreOptions = () => {
         return this.state.genres.map((genre) => ({
             value: genre.id,
-            label: genre.genre_name,
+            label: genre.genre_name
         }));
     };
 
-    // Mở modal chỉnh sửa
+    // Handle pagination
+    handlePageChange = (newPage) => {
+        this.setState({ currentPage: newPage }, this.fetchMovies);
+    };
+
+    // Open edit modal
     handleEditMovie = (movie) => {
         const formattedReleaseDate = movie.release_date.split('T')[0];
-
-        // Chuyển đổi danh sách thể loại thành định dạng cho react-select
         const selectedGenres = movie.genres
             ? movie.genres.map((genre) => ({
                 value: genre.id,
-                label: genre.genre_name,
+                label: genre.genre_name
             }))
             : [];
-
         this.setState({
             isEditModalOpen: true,
-            selectedMovie: {
-                ...movie,
-                release_date: formattedReleaseDate,
-                genres: selectedGenres, // Lưu danh sách thể loại đã chọn
-            },
+            selectedMovie: { ...movie, release_date: formattedReleaseDate, genres: selectedGenres },
             previewPoster: movie.poster_url,
-            previewTrailer: movie.trailer_url,
+            previewTrailer: movie.trailer_url
         });
     };
 
-    handleGenreChange = (selectedOptions) => {
-        this.setState({
-            selectedMovie: {
-                ...this.state.selectedMovie,
-                genres: selectedOptions || [],
-            },
-        });
-    };
-
-
-    // Đóng modal chỉnh sửa
+    // Close edit modal
     closeModal = () => {
         this.setState({
             isEditModalOpen: false,
             selectedMovie: null,
             previewPoster: '',
-            previewTrailer: '',
+            previewTrailer: ''
         });
     };
 
-    // Xử lý thay đổi dữ liệu trong form chỉnh sửa
     handleInputChange = (e, field) => {
-        let movieCopy = { ...this.state.selectedMovie };
+        const movieCopy = { ...this.state.selectedMovie };
         movieCopy[field] = e.target.value;
-        this.setState({
-            selectedMovie: movieCopy,
-        });
+        this.setState({ selectedMovie: movieCopy });
     };
 
+    handleGenreChange = (selectedOptions) => {
+        this.setState({
+            selectedMovie: { ...this.state.selectedMovie, genres: selectedOptions || [] }
+        });
+    };
     handlePosterUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -117,8 +127,6 @@ class ManageMovie extends Component {
             reader.readAsDataURL(file);
         }
     };
-
-
     // Xử lý upload video
     handleTrailerUpload = (e) => {
         const file = e.target.files[0];
@@ -136,70 +144,68 @@ class ManageMovie extends Component {
             };
             reader.readAsDataURL(file);
         }
+    };  
+    // Handle search input change
+    handleSearchChange = (e) => {
+        this.setState({ searchQuery: e.target.value });
     };
 
-    // Xử lý khi lưu thay đổi
+    // Trigger search when search button is clicked
+    handleSearchSubmit = () => {
+        this.setState({ currentPage: 1 }, this.fetchMovies); // Reset to first page for a new search
+    };
+
+    // Save changes to movie
     handleSaveChanges = async () => {
         const { selectedMovie } = this.state;
         this.setState({ isLoading: true });
         try {
-            let formData = new FormData();
+            const formData = new FormData();
             formData.append('title', selectedMovie.title);
             formData.append('description', selectedMovie.description);
             formData.append('release_date', selectedMovie.release_date);
             formData.append('duration', selectedMovie.duration);
             formData.append('director', selectedMovie.director);
             formData.append('rating', selectedMovie.rating);
-
             if (selectedMovie.posterFile) {
                 formData.append('poster', selectedMovie.posterFile);
             }
-
             if (selectedMovie.trailerFile) {
                 formData.append('trailer', selectedMovie.trailerFile);
             }
-
-            // Lấy danh sách ID thể loại
             const genreIds = selectedMovie.genres.map((genre) => genre.value);
             formData.append('genres', JSON.stringify(genreIds));
 
-            let response = await updateMovieApi(selectedMovie.id, formData);
-            console.log("check res update", response)
+            const response = await updateMovieApi(selectedMovie.id, formData);
             if (response && response.status === 'success') {
-                this.setState({ isLoading: false })
                 this.setState((prevState) => ({
                     movies: prevState.movies.map((movie) =>
                         movie.id === selectedMovie.id
-                            ? {
-                                ...selectedMovie, genres: response.data.genres,
-                                poster_url: response.data.poster_url
-                            }
+                            ? { ...selectedMovie, genres: response.data.genres, poster_url: response.data.poster_url }
                             : movie
                     ),
+                    isLoading: false
                 }));
                 this.closeModal();
                 toast.success('Cập nhật phim thành công');
-
-
             } else {
                 toast.error('Lỗi khi cập nhật phim');
+                this.setState({ isLoading: false });
             }
         } catch (error) {
             toast.error('Lỗi khi gọi API cập nhật phim');
+            this.setState({ isLoading: false });
         }
     };
 
-
-    // Thêm hàm handleDeleteMovie vào lớp ManageMovie
+    // Delete a movie
     handleDeleteMovie = async (movieId) => {
         try {
-            // Gọi API để xóa phim
-            let response = await deleteMovieApi(movieId);
+            const response = await deleteMovieApi(movieId);
             if (response && response.status === 'success') {
                 toast.success('Xóa phim thành công');
-                // Cập nhật lại danh sách phim trong state
                 this.setState((prevState) => ({
-                    movies: prevState.movies.filter((movie) => movie.id !== movieId),
+                    movies: prevState.movies.filter((movie) => movie.id !== movieId)
                 }));
             } else {
                 toast.error('Lỗi khi xóa phim');
@@ -209,23 +215,55 @@ class ManageMovie extends Component {
         }
     };
 
+    renderPagination = () => {
+        const { currentPage, totalPages } = this.state;
+        const pages = [];
+        for (let i = 1; i <= totalPages; i++) {
+            pages.push(
+                <button
+                    key={i}
+                    className={`page-button ${i === currentPage ? 'active' : ''}`}
+                    onClick={() => this.handlePageChange(i)}
+                >
+                    {i}
+                </button>
+            );
+        }
+        return <div className="pagination">{pages}</div>;
+    };
+
     render() {
-        const { movies, isEditModalOpen, selectedMovie, previewPoster, previewTrailer, isLoading } = this.state;
+        const { movies, isEditModalOpen, selectedMovie, previewPoster, previewTrailer, isLoading, searchQuery } = this.state;
 
         return (
             <div className="manage-movie-container">
-                <h2>Danh sách các phim</h2>
+                <h2>Quản Lý Phim</h2>
+
+                {/* Search Input */}
+                <div className="search-container">
+                    <input
+                        type="text"
+                        placeholder="Tìm kiếm theo tên phim..."
+                        value={searchQuery}
+                        onChange={this.handleSearchChange}
+                        className="form-control search-input"
+                    />
+                    <button onClick={this.handleSearchSubmit} className="btn btn-primary search-button">
+                        Tìm Kiếm
+                    </button>
+                </div>
+
                 <table className="table">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Tên Phim</th>
-                            <th>Ngày Bắt Đầu</th>
-                            <th>Thời lượng</th>
-                            <th>Đạo diễn</th>
+                            <th>Ngày Phát Hành</th>
+                            <th>Thời Lượng</th>
+                            <th>Đạo Diễn</th>
                             <th>Poster</th>
                             <th>Thể Loại</th>
-                            <th>Actions</th>
+                            <th>Hành Động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -235,7 +273,7 @@ class ManageMovie extends Component {
                                     <td>{movie.id}</td>
                                     <td>{movie.title}</td>
                                     <td>{movie.release_date.split('T')[0]}</td>
-                                    <td>{movie.duration}</td>
+                                    <td>{movie.duration} phút</td>
                                     <td>{movie.director}</td>
                                     <td>
                                         <img src={movie.poster_url} alt="Poster" style={{ width: '50px', height: '75px' }} />
@@ -246,16 +284,10 @@ class ManageMovie extends Component {
                                             : 'N/A'}
                                     </td>
                                     <td>
-                                        <button
-                                            className="btn btn-primary"
-                                            onClick={() => this.handleEditMovie(movie)}
-                                        >
-                                            <i className="fa fa-edit"></i> Chỉnh sửa
+                                        <button className="btn btn-primary" onClick={() => this.handleEditMovie(movie)}>
+                                            <i className="fa fa-edit"></i> Chỉnh Sửa
                                         </button>
-                                        <button
-                                            className="btn btn-danger"
-                                            onClick={() => this.handleDeleteMovie(movie.id)}
-                                        >
+                                        <button className="btn btn-danger" onClick={() => this.handleDeleteMovie(movie.id)}>
                                             <i className="fa fa-trash"></i> Xóa
                                         </button>
                                     </td>
@@ -269,15 +301,17 @@ class ManageMovie extends Component {
                     </tbody>
                 </table>
 
-                {/* Modal chỉnh sửa phim */}
+                {/* Pagination Controls */}
+                {this.renderPagination()}
+
+                {/* Edit Movie Modal */}
                 {selectedMovie && (
-                    
                     <Modal isOpen={isEditModalOpen} toggle={this.closeModal}>
-                        <ModalHeader toggle={this.closeModal}>Chỉnh sửa phim</ModalHeader>
+                        <ModalHeader toggle={this.closeModal}>Chỉnh Sửa Phim</ModalHeader>
                         <ModalBody>
                             <Form>
                                 <FormGroup>
-                                    <Label for="title">Title</Label>
+                                    <Label for="title">Tên phim</Label>
                                     <Input
                                         type="text"
                                         id="title"
@@ -287,7 +321,7 @@ class ManageMovie extends Component {
                                 </FormGroup>
 
                                 <FormGroup>
-                                    <Label for="description">Description</Label>
+                                    <Label for="description">Nội dung</Label>
                                     <Input
                                         type="textarea"
                                         id="description"
@@ -297,7 +331,7 @@ class ManageMovie extends Component {
                                 </FormGroup>
 
                                 <FormGroup>
-                                    <Label for="releaseDate">Release Date</Label>
+                                    <Label for="releaseDate">Ngày phát hành</Label>
                                     <Input
                                         type="date"
                                         id="releaseDate"
@@ -307,7 +341,7 @@ class ManageMovie extends Component {
                                 </FormGroup>
 
                                 <FormGroup>
-                                    <Label for="duration">Duration</Label>
+                                    <Label for="duration">Thời lượng</Label>
                                     <Input
                                         type="number"
                                         id="duration"
@@ -317,7 +351,7 @@ class ManageMovie extends Component {
                                 </FormGroup>
 
                                 <FormGroup>
-                                    <Label for="director">Director</Label>
+                                    <Label for="director">Đạo diễn</Label>
                                     <Input
                                         type="text"
                                         id="director"
@@ -375,27 +409,13 @@ class ManageMovie extends Component {
                             </Form>
                         </ModalBody>
                         <ModalFooter>
-                          
-                            <Button color="secondary" onClick={this.closeModal}>
-                                Hủy
+                            <Button color="secondary" onClick={this.closeModal}>Hủy</Button>
+                            <Button color="primary" onClick={this.handleSaveChanges} disabled={isLoading}>
+                                {isLoading ? 'Đang Lưu...' : 'Lưu Thay Đổi'}
                             </Button>
-                            <Button color="primary" onClick={this.handleSaveChanges}>
-                                Lưu thay đổi
-                                {isLoading &&
-                                    <div class="d-flex justify-content-center">
-                                        <div class="spinner-border" role="status">
-                                            <span class="visually-hidden">Loading...</span>
-                                        </div>
-                                    </div>
-                                }
-                            </Button>
-                           
-                            
                         </ModalFooter>
                     </Modal>
-                    
                 )}
-               
             </div>
         );
     }

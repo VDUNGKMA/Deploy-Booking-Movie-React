@@ -87,6 +87,7 @@ export const adminMenu = [
 
 
 ];
+
 export const doctorMenu = [
     { //Quản lý thể loại phim
         name: 'menu.staff.screening-room',

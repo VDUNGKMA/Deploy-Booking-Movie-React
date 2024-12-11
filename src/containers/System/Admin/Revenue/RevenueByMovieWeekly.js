@@ -1,8 +1,8 @@
-// export default RevenueByMovieWeekly;
 import React, { useEffect, useState } from 'react';
-import './RevenueByMovieWeekly.scss'
+import './RevenueByMovieWeekly.scss';
 import { Bar } from 'react-chartjs-2';
-import axios  from '../../../../axios';
+import axios from '../../../../axios';
+
 const RevenueByMovieWeekly = () => {
     const [weeklyRevenue, setWeeklyRevenue] = useState([]);
     const [startDate, setStartDate] = useState('');
@@ -11,7 +11,7 @@ const RevenueByMovieWeekly = () => {
 
     const fetchWeeklyRevenue = async () => {
         if (!startDate || !endDate) {
-            alert('Please select both start and end dates for the week!');
+            alert('Vui lòng chọn cả ngày bắt đầu và ngày kết thúc!');
             return;
         }
 
@@ -24,7 +24,7 @@ const RevenueByMovieWeekly = () => {
 
             // Nhóm dữ liệu theo tuần
             const groupedData = response.reduce((acc, current) => {
-                const week = `Week ${current.week}`;
+                const week = `Tuần ${current.week}`;
                 if (!acc[week]) acc[week] = [];
                 acc[week].push({
                     movieTitle: current.movieTitle,
@@ -41,7 +41,7 @@ const RevenueByMovieWeekly = () => {
                     label: movieTitle,
                     data: weeks.map(week => {
                         const movie = groupedData[week].find(item => item.movieTitle === movieTitle);
-                        return movie ? movie.totalRevenue : 0; // Nếu không có dữ liệu cho tuần đó thì trả về 0
+                        return movie ? movie.totalRevenue : 0;
                     }),
                     backgroundColor: getRandomColor(),
                     borderColor: getRandomColor(),
@@ -54,7 +54,7 @@ const RevenueByMovieWeekly = () => {
                 datasets: datasets,
             });
         } catch (error) {
-            console.error('Error fetching weekly movie revenue:', error);
+            console.error('Lỗi khi lấy dữ liệu doanh thu theo tuần:', error);
         }
     };
 
@@ -70,11 +70,11 @@ const RevenueByMovieWeekly = () => {
 
     return (
         <div className="revenue-weekly-movie">
-            <h1>Weekly Movie Revenue</h1>
+            <h1>Doanh Thu Phim Theo Tuần</h1>
 
             <div className="date-picker-container">
                 <div className="date-picker">
-                    <label>Select Start Date: </label>
+                    <label>Chọn Ngày Bắt Đầu: </label>
                     <input
                         type="date"
                         value={startDate}
@@ -82,7 +82,7 @@ const RevenueByMovieWeekly = () => {
                     />
                 </div>
                 <div className="date-picker">
-                    <label>Select End Date: </label>
+                    <label>Chọn Ngày Kết Thúc: </label>
                     <input
                         type="date"
                         value={endDate}
@@ -91,8 +91,7 @@ const RevenueByMovieWeekly = () => {
                 </div>
             </div>
 
-
-            <button className="btn" onClick={fetchWeeklyRevenue}>Get Weekly Revenue</button>
+            <button className="btn" onClick={fetchWeeklyRevenue}>Lấy Doanh Thu</button>
 
             {/* Biểu đồ cột */}
             <div className="chart-container">
@@ -111,7 +110,7 @@ const RevenueByMovieWeekly = () => {
                         },
                         title: {
                             display: true,
-                            text: 'Doanh thu theo tuần và Movie Title',
+                            text: 'Doanh thu theo tuần và tên phim',
                         },
                     }}
                     height={400}
@@ -122,16 +121,16 @@ const RevenueByMovieWeekly = () => {
             <table>
                 <thead>
                     <tr>
-                        <th>Week</th>
-                        <th>Movie Title</th>
-                        <th>Total Revenue</th>
-                        <th>Total Tickets</th>
+                        <th>Tuần</th>
+                        <th>Tên Phim</th>
+                        <th>Tổng Doanh Thu</th>
+                        <th>Tổng Vé Bán</th>
                     </tr>
                 </thead>
                 <tbody>
                     {weeklyRevenue.map((revenue, index) => (
                         <tr key={index}>
-                            <td>{`Week ${revenue.week}`}</td>
+                            <td>{`Tuần ${revenue.week}`}</td>
                             <td>{revenue.movieTitle}</td>
                             <td>{parseFloat(revenue.totalRevenue).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>
                             <td>{revenue.totalTickets}</td>

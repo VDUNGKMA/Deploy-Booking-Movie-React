@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { updateGenreApi, createGenreApi } from '../../../services/userService'; // Import the API for adding a new genre
+import { updateGenreApi, createGenreApi } from '../../../services/userService';
 import './EditGenreModal.scss';
 
 class EditGenreModal extends Component {
@@ -38,12 +38,12 @@ class EditGenreModal extends Component {
 
             if (response.status === "success") {
                 onSave(response.data); // Pass the new/updated genre back to the parent component
-                console.log('Genre saved successfully!');
+                console.log('Thể loại đã được lưu thành công!');
             } else {
-                console.error('Failed to save genre');
+                console.error('Lưu thể loại thất bại');
             }
         } catch (error) {
-            console.error('Error saving genre:', error);
+            console.error('Lỗi khi lưu thể loại:', error);
         }
     }
 
@@ -54,7 +54,7 @@ class EditGenreModal extends Component {
             <div className="modal-overlay">
                 <div className="modal-edit-content">
                     <div className="modal-header">
-                        <h3>{isNewGenre ? 'Add New Genre' : 'Edit Genre'}</h3>
+                        <h3>{isNewGenre ? 'Thêm Thể Loại Mới' : 'Chỉnh Sửa Thể Loại'}</h3>
                     </div>
                     <div className="modal-body">
                         <div className="form-group">
@@ -69,10 +69,10 @@ class EditGenreModal extends Component {
                     </div>
                     <div className="modal-footer">
                         <button className="btn btn-primary" onClick={this.handleSave}>
-                            {isNewGenre ? 'Add' : 'Save'}
+                            {isNewGenre ? 'Thêm Mới' : 'Lưu'}
                         </button>
                         <button className="btn btn-danger" onClick={onClose}>
-                            Close
+                            Đóng
                         </button>
                     </div>
                 </div>
