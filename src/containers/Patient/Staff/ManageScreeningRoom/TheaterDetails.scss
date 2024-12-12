@@ -98,6 +98,10 @@
         background-color: #4caf50;
         color: #fff;
     }
+     &--used {
+        background-color: #ffeb3b;  // Yellow for used seats
+        color: #000;
+    }
 }
 
 // Modal phóng to sơ đồ ghế

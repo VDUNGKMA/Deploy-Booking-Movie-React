@@ -108,17 +108,7 @@ class ManageCinema extends Component {
             });
         }
     };
-    // Open Manage Seats Modal
-    // openManageSeatsModal = (theater) => {
-    //     this.setState({
-    //         isManageSeatsModalOpen: true,
-    //         selectedTheaterForSeats: theater,
-    //         // Đóng các modal khác nếu mở
-    //         isManageTheatersModalOpen: false,
-    //         isAddEditTheaterModalOpen: false,
-    //         isCinemaModalOpen: false,
-    //     });
-    // };
+    
     openManageSeatsPage = (theater) => {
         const { history } = this.props;
         const { selectedCinemaForTheaters } = this.state;
@@ -336,6 +326,7 @@ class ManageCinema extends Component {
             if (response && response.status === 'success') {
                 toast.success(`${isEditTheaterMode ? 'Cập nhật' : 'Thêm mới'} phòng chiếu thành công`);
                 this.setState({ isAddEditTheaterModalOpen: false });
+                await this.fetchCinemas();
                 // Reload danh sách phòng chiếu
                 this.openManageTheatersModal(selectedCinemaForTheaters);
             } else {
@@ -464,7 +455,7 @@ class ManageCinema extends Component {
                                     placeholder="Nhập địa điểm"
                                 />
                             </FormGroup>
-                            <FormGroup>
+                            {/* <FormGroup>
                                 <Label for="number_of_halls">Số lượng phòng</Label>
                                 <Input
                                     type="number"
@@ -473,7 +464,7 @@ class ManageCinema extends Component {
                                     onChange={(e) => this.handleCinemaInputChange(e, 'number_of_halls')}
                                     placeholder="Nhập số lượng phòng"
                                 />
-                            </FormGroup>
+                            </FormGroup> */}
                             <FormGroup>
                                 <Label for="image">Hình ảnh</Label>
                                 <Input type="file" id="image" onChange={this.handleCinemaImageChange} />

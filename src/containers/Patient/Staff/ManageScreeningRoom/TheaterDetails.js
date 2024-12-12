@@ -67,7 +67,8 @@ const TheaterDetails = ({ theater }) => {
                         {seats.map((seat) => (
                             <div
                                 key={seat.seatId}
-                                className={`seat ${seat.isBooked ? 'seat--booked' : 'seat--available'}`}
+                                // className={`seat ${seat.isBooked ? 'seat--booked' : 'seat--available'}`}
+                                className={`seat ${seat.isBooked ? 'seat--booked' : seat.isUsed ? 'seat--used' : 'seat--available'}`}
                             >
                                 {seat.row}-{seat.number}
                             </div>
@@ -93,7 +94,8 @@ const TheaterDetails = ({ theater }) => {
                             {seats.map((seat) => (
                                 <div
                                     key={seat.seatId}
-                                    className={`seat ${seat.isBooked ? 'seat--booked' : 'seat--available'}`}
+                                    // className={`seat ${seat.isBooked ? 'seat--booked' : 'seat--available'}`}
+                                    className={`seat ${seat.isBooked ? 'seat--booked' : seat.isUsed ? 'seat--used' : 'seat--available'}`}
                                 >
                                     {seat.row}-{seat.number}
                                 </div>
